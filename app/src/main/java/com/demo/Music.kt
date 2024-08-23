@@ -7,6 +7,7 @@ class Music(
     val nameArtist: String = "",
     val description: String = "",
     val heart: String = "",
-    val playPause: String = ""
-) {
-}
+    val playPause: String = "",
+    val isPlaying: Boolean = false,
+    val isFavourite: Boolean = false,
+)
