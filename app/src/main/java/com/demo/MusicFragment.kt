@@ -2,8 +2,6 @@ package com.demo
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,62 +16,17 @@ class MusicFragment : Fragment() {
     private lateinit var adapter: MusicAdapter
 
     val list =
-        listOf(
+        List(100) { i ->
             Music(
-                "1",
+                "$i",
                 "R.drawable.ic_launcher_foreground",
-                "Bai hat 1",
-                "Ca si 1",
-                "Mo ta bai hat 1",
+                "Bai hat $i",
+                "Ca si $i",
+                "Mo ta bai hat $i",
                 "R.drawable.ic_heart",
                 "R.drawable.ic_play",
-            ),
-            Music(
-                "2",
-                "R.drawable.ic_launcher_foreground",
-                "Bai hat 2",
-                "Ca si 2",
-                "Mo ta bai hat 2",
-                "R.drawable.ic_heart",
-                "R.drawable.ic_play",
-            ),
-            Music(
-                "3",
-                "R.drawable.ic_launcher_foreground",
-                "Bai hat 3",
-                "Ca si 3",
-                "Mo ta bai hat 3",
-                "R.drawable.ic_heart",
-                "R.drawable.ic_play",
-            ),
-            Music(
-                "4",
-                "R.drawable.ic_launcher_foreground",
-                "Bai hat 4",
-                "Ca si 4",
-                "Mo ta bai hat 4",
-                "R.drawable.ic_heart",
-                "R.drawable.ic_play",
-            ),
-            Music(
-                "5",
-                "R.drawable.ic_launcher_foreground",
-                "Bai hat 5",
-                "Ca si 5",
-                "Mo ta bai hat 5",
-                "R.drawable.ic_heart",
-                "R.drawable.ic_play",
-            ),
-            Music(
-                "6",
-                "R.drawable.ic_launcher_foreground",
-                "Bai hat 6",
-                "Ca si 6",
-                "Mo ta bai hat 6",
-                "R.drawable.ic_heart",
-                "R.drawable.ic_play",
-            ),
-        )
+            )
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,49 +47,85 @@ class MusicFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter =
             MusicAdapter(onItemLongClick = { position, viewClick ->
-                val viewPopup =
-                    LayoutInflater.from(requireContext()).inflate(R.layout.layout_popup, null)
-                val popupWindow =
-                    PopupWindow(
-                        viewPopup,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        true,
-                    )
-                popupWindow.contentView = viewPopup
-                popupWindow.showAtLocation(
-                    viewClick,
-                    Gravity.NO_GRAVITY,
-                    viewClick.x.toInt() + viewClick.measuredWidth / 2,
-                    viewClick.y.toInt() / viewClick.measuredHeight * viewClick.measuredHeight + viewClick.measuredHeight,
+                setupPopup(position, viewClick)
+            }, onItemPlayPauseClick = { music ->
+                // TODO: update playpause of music -> update list
+                adapter.submitList(
+                    list
+                        .map { item ->
+                            item.copy(
+                                isPlaying =
+                                    if (item.id ==
+                                        music?.id
+                                    ) {
+                                        !item.isPlaying
+                                    } else {
+                                        false
+                                    },
+                            )
+                        }.toList(),
                 )
-                val dropdownBinding =
-                    LayoutPopupBinding.bind(viewPopup)
-                dropdownBinding.play.setOnClickListener {
-                    if(list[position].isPlaying) {
-                        dropdownBinding.play.setImageResource(R.drawable.ic_play)
-                        list[position].isPlaying = false
-                    }
-                    else {
-                        dropdownBinding.play.setImageResource(R.drawable.ic_pause)
-                        list[position].isPlaying = true
-                    }
-                    adapter.notifyItemChanged(position, Bundle().apply { putBoolean("isPlaying", list[position].isPlaying) })
-                }
-                dropdownBinding.favourite.setOnClickListener {
-                    if (list[position].isFavourite) {
-                        dropdownBinding.favourite.setImageResource(R.drawable.ic_heart)
-                        list[position].isFavourite = false
-                    }
-                    else {
-                        dropdownBinding.favourite.setImageResource(R.drawable.ic_heart_full)
-                        list[position].isFavourite = true
-                    }
-                    adapter.notifyItemChanged(position, Bundle().apply { putBoolean("isFavourite", list[position].isFavourite) })
-
-                }
+            }, onItemHeartClick = { music ->
+                // TODO: update isFavourite of music -> update list
+                adapter.submitList(
+                    list
+                        .map { item ->
+                            item.copy(
+                                isPlaying =
+                                    if (item.id ==
+                                        music?.id
+                                    ) {
+                                        !item.isFavourite
+                                    } else {
+                                        item.isFavourite
+                                    },
+                            )
+                        }.toList(),
+                )
             })
         binding.recycleView.adapter = adapter
-        adapter.submitList(list.toList())
+        adapter.submitList(list.map { it.copy() }.toList())
+    }
+
+    private fun setupPopup(
+        position: Int,
+        viewClick: View,
+    ) {
+        val viewPopup =
+            LayoutInflater.from(requireContext()).inflate(R.layout.layout_popup, null)
+        val popupWindow =
+            PopupWindow(
+                viewPopup,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                true,
+            )
+        popupWindow.showAsDropDown(viewClick, viewClick.measuredWidth / 2, 0)
+        val dropdownBinding =
+            LayoutPopupBinding.bind(viewPopup)
+        dropdownBinding.play.setImageResource(if (list[position].isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
+        dropdownBinding.favourite.setImageResource(
+            if (list[position].isFavourite) R.drawable.ic_heart_full else R.drawable.ic_heart,
+        )
+        dropdownBinding.play.setOnClickListener {
+            if (list[position].isPlaying) {
+                dropdownBinding.play.setImageResource(R.drawable.ic_play)
+                list[position].isPlaying = false
+            } else {
+                dropdownBinding.play.setImageResource(R.drawable.ic_pause)
+                list[position].isPlaying = true
+            }
+            adapter.submitList(list.map { it.copy() }.toList())
+        }
+        dropdownBinding.favourite.setOnClickListener {
+            if (list[position].isFavourite) {
+                dropdownBinding.favourite.setImageResource(R.drawable.ic_heart)
+                list[position].isFavourite = false
+            } else {
+                dropdownBinding.favourite.setImageResource(R.drawable.ic_heart_full)
+                list[position].isFavourite = true
+            }
+            adapter.submitList(list.map { it.copy() }.toList())
+        }
     }
 }

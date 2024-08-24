@@ -1,6 +1,6 @@
 package com.demo
 
-class Music(
+data class Music(
     val id: String = "",
     val img: String = "",
     val name: String = "",

@@ -1,64 +1,38 @@
 package com.demo
 
 import android.annotation.SuppressLint
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.demo.databinding.ItemMusicBinding
 
 class MusicAdapter(
     val onItemLongClick: (Int, View) -> Unit,
-) : ListAdapter<Music, MusicAdapter.MusicViewHolder>(MusicDiffUtil()) {
-    @SuppressLint("ClickableViewAccessibility")
-    class MusicViewHolder(
-        var binding: ItemMusicBinding,
-        val onItemLongClick: (Int, View) -> Unit,
-    ) : RecyclerView.ViewHolder(binding.root) {
-        fun bindData(music: Music) {
-            binding.apply {
-                img.setImageResource(R.drawable.ic_launcher_foreground)
-                name.text = music.name
-                nameArtist.text = music.nameArtist
-                description.text = music.description
-                playPause.setImageResource(if(music.isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
-                heart.setImageResource(if (music.isFavourite) R.drawable.ic_heart_full else R.drawable.ic_heart)
-            }
-        }
-
-        fun bindData(payloads: Bundle) {
-            if (payloads.containsKey("isPlaying")) {
-                val isPlaying =payloads.getBoolean("isPlaying")
-                binding.playPause.setImageResource(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
-            }
-            if(payloads.containsKey("isFavourite")) {
-                val isFavourite = payloads.getBoolean("isFavourite")
-                binding.heart.setImageResource(if(isFavourite) R.drawable.ic_heart_full else R.drawable.ic_heart )
-            }
-        }
-
-        init {
-            binding.root.setOnLongClickListener {
-                val position = layoutPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    onItemLongClick.invoke(position, it)
-                }
-                true
-            }
-
-        }
+    // communicate with fragment
+    val onItemPlayPauseClick: (Music?) -> Unit,
+    val onItemHeartClick: (Music?) -> Unit,
+) : ListAdapter<Music, MusicViewHolder>(MusicDiffUtil()) {
+    companion object {
+        val UPDATE_STATUS_AUDIO = "UPDATE_STATUS_AUDIO"
+        val UPDATE_STATUS_FAVOURITE = "UPDATE_STATUS_FAVOURITE"
+        val UPDATE_DATA = "UPDATE_DATA"
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): MusicViewHolder {
         val binding = ItemMusicBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MusicViewHolder(binding, onItemLongClick)
+        return MusicViewHolder(binding, onItemLongClick, onItemPlayPauseClick = {
+            // TODO: push callback -> fragment handle
+            onItemPlayPauseClick.invoke(getItem(it))
+        }, onItemHeartClick = {
+            // TODO: push callback -> fragment handle
+            onItemHeartClick.invoke(getItem(it))
+        })
     }
 
     override fun onBindViewHolder(
@@ -74,15 +48,11 @@ class MusicAdapter(
         position: Int,
         payloads: MutableList<Any>,
     ) {
-        if(payloads.isEmpty()) {
+        if (payloads.isEmpty()) {
             onBindViewHolder(holder, position)
+        } else {
+            holder.bindData(payloads, getItem(position))
         }
-        else {
-            val bundle = payloads[0] as Bundle
-            holder.bindData(bundle)
-        }
-
-
     }
 }
 
@@ -95,17 +65,19 @@ class MusicDiffUtil : DiffUtil.ItemCallback<Music>() {
     override fun areContentsTheSame(
         oldItem: Music,
         newItem: Music,
-    ): Boolean = oldItem.isPlaying == newItem.isPlaying
+    ): Boolean =
+        oldItem.isPlaying == newItem.isPlaying &&
+            oldItem.isFavourite == newItem.isFavourite
 
-    override fun getChangePayload(oldItem: Music, newItem: Music): Any? {
-        return super.getChangePayload(oldItem, newItem)
-        val bundle = Bundle()
-        if(oldItem.isPlaying != newItem.isPlaying) {
-            bundle.putBoolean("isPlaying", newItem.isPlaying)
+    override fun getChangePayload(
+        oldItem: Music,
+        newItem: Music,
+    ): Any? =
+        if (oldItem.isPlaying != newItem.isPlaying) {
+            MusicAdapter.UPDATE_STATUS_AUDIO
+        } else if (oldItem.isFavourite != newItem.isFavourite) {
+            MusicAdapter.UPDATE_STATUS_FAVOURITE
+        } else {
+            MusicAdapter.UPDATE_DATA
         }
-        if(oldItem.isFavourite != newItem.isFavourite) {
-            bundle.putBoolean("isFavourite", newItem.isFavourite)
-        }
-        return if(bundle.isEmpty) null else bundle
-    }
 }
