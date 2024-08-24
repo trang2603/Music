@@ -1,6 +1,8 @@
 package com.demo
 
 import android.annotation.SuppressLint
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +25,19 @@ class MusicAdapter(
                 name.text = music.name
                 nameArtist.text = music.nameArtist
                 description.text = music.description
+                playPause.setImageResource(if(music.isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
+                heart.setImageResource(if (music.isFavourite) R.drawable.ic_heart_full else R.drawable.ic_heart)
+            }
+        }
+
+        fun bindData(payloads: Bundle) {
+            if (payloads.containsKey("isPlaying")) {
+                val isPlaying =payloads.getBoolean("isPlaying")
+                binding.playPause.setImageResource(if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
+            }
+            if(payloads.containsKey("isFavourite")) {
+                val isFavourite = payloads.getBoolean("isFavourite")
+                binding.heart.setImageResource(if(isFavourite) R.drawable.ic_heart_full else R.drawable.ic_heart )
             }
         }
 
@@ -32,32 +47,9 @@ class MusicAdapter(
                 if (position != RecyclerView.NO_POSITION) {
                     onItemLongClick.invoke(position, it)
                 }
-
-                /*val position = layoutPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val viewPopup =
-                        LayoutInflater
-                            .from(binding.root.context)
-                            .inflate(R.layout.layout_popup, null)
-                    var binding2 = LayoutPopupBinding.inflate(LayoutInflater.from(binding.root.context))
-                    binding2.play.setOnClickListener {
-                    }
-                    val popupWindow =
-                        PopupWindow(
-                            viewPopup,
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            true,
-                        )
-                    popupWindow.showAtLocation(
-                        binding.root,
-                        Gravity.NO_GRAVITY,
-                        lastTouchX.toInt(),
-                        lastTouchY.toInt(),
-                    )
-                }*/
                 true
             }
+
         }
     }
 
@@ -66,7 +58,6 @@ class MusicAdapter(
         viewType: Int,
     ): MusicViewHolder {
         val binding = ItemMusicBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
         return MusicViewHolder(binding, onItemLongClick)
     }
 
@@ -83,7 +74,15 @@ class MusicAdapter(
         position: Int,
         payloads: MutableList<Any>,
     ) {
-        super.onBindViewHolder(holder, position, payloads)
+        if(payloads.isEmpty()) {
+            onBindViewHolder(holder, position)
+        }
+        else {
+            val bundle = payloads[0] as Bundle
+            holder.bindData(bundle)
+        }
+
+
     }
 }
 
@@ -96,5 +95,17 @@ class MusicDiffUtil : DiffUtil.ItemCallback<Music>() {
     override fun areContentsTheSame(
         oldItem: Music,
         newItem: Music,
-    ): Boolean = areItemsTheSame(oldItem, newItem)
+    ): Boolean = oldItem.isPlaying == newItem.isPlaying
+
+    override fun getChangePayload(oldItem: Music, newItem: Music): Any? {
+        return super.getChangePayload(oldItem, newItem)
+        val bundle = Bundle()
+        if(oldItem.isPlaying != newItem.isPlaying) {
+            bundle.putBoolean("isPlaying", newItem.isPlaying)
+        }
+        if(oldItem.isFavourite != newItem.isFavourite) {
+            bundle.putBoolean("isFavourite", newItem.isFavourite)
+        }
+        return if(bundle.isEmpty) null else bundle
+    }
 }

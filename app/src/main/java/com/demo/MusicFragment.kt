@@ -2,6 +2,7 @@ package com.demo
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.demo.databinding.FragmentMusicBinding
+import com.demo.databinding.LayoutPopupBinding
 
 class MusicFragment : Fragment() {
     private lateinit var binding: FragmentMusicBinding
@@ -108,11 +110,33 @@ class MusicFragment : Fragment() {
                     viewClick.x.toInt() + viewClick.measuredWidth / 2,
                     viewClick.y.toInt() / viewClick.measuredHeight * viewClick.measuredHeight + viewClick.measuredHeight,
                 )
-//                val dropdownBinding =
-//                    LayoutPopupBinding.inflate(LayoutInflater.from(requireContext()))
-//                dropdownBinding.
+                val dropdownBinding =
+                    LayoutPopupBinding.bind(viewPopup)
+                dropdownBinding.play.setOnClickListener {
+                    if(list[position].isPlaying) {
+                        dropdownBinding.play.setImageResource(R.drawable.ic_play)
+                        list[position].isPlaying = false
+                    }
+                    else {
+                        dropdownBinding.play.setImageResource(R.drawable.ic_pause)
+                        list[position].isPlaying = true
+                    }
+                    adapter.notifyItemChanged(position, Bundle().apply { putBoolean("isPlaying", list[position].isPlaying) })
+                }
+                dropdownBinding.favourite.setOnClickListener {
+                    if (list[position].isFavourite) {
+                        dropdownBinding.favourite.setImageResource(R.drawable.ic_heart)
+                        list[position].isFavourite = false
+                    }
+                    else {
+                        dropdownBinding.favourite.setImageResource(R.drawable.ic_heart_full)
+                        list[position].isFavourite = true
+                    }
+                    adapter.notifyItemChanged(position, Bundle().apply { putBoolean("isFavourite", list[position].isFavourite) })
+
+                }
             })
         binding.recycleView.adapter = adapter
-        adapter.submitList(list)
+        adapter.submitList(list.toList())
     }
 }

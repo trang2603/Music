@@ -8,6 +8,6 @@ class Music(
     val description: String = "",
     val heart: String = "",
     val playPause: String = "",
-    val isPlaying: Boolean = false,
-    val isFavourite: Boolean = false,
+    var isPlaying: Boolean = false,
+    var isFavourite: Boolean = false,
 )
