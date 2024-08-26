@@ -1,4 +1,4 @@
-package com.demo
+package com.demo.music.songs
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.demo.databinding.ItemMusicBinding
+import com.demo.databinding.ItemSongsBinding
 
-class MusicAdapter(
+class SongsAdapter(
     val onItemLongClick: (Int, View) -> Unit,
     // communicate with fragment
-    val onItemPlayPauseClick: (Music?) -> Unit,
-    val onItemHeartClick: (Music?) -> Unit,
-) : ListAdapter<Music, MusicViewHolder>(MusicDiffUtil()) {
+    val onItemPlayPauseClick: (Songs?) -> Unit,
+    val onItemHeartClick: (Songs?) -> Unit,
+) : ListAdapter<Songs, SongsViewHolder>(MusicDiffUtil()) {
     companion object {
         val UPDATE_STATUS_AUDIO = "UPDATE_STATUS_AUDIO"
         val UPDATE_STATUS_FAVOURITE = "UPDATE_STATUS_FAVOURITE"
@@ -24,9 +24,9 @@ class MusicAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): MusicViewHolder {
-        val binding = ItemMusicBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MusicViewHolder(binding, onItemLongClick, onItemPlayPauseClick = {
+    ): SongsViewHolder {
+        val binding = ItemSongsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return SongsViewHolder(binding, onItemLongClick, onItemPlayPauseClick = {
             // TODO: push callback -> fragment handle
             onItemPlayPauseClick.invoke(getItem(it))
         }, onItemHeartClick = {
@@ -36,7 +36,7 @@ class MusicAdapter(
     }
 
     override fun onBindViewHolder(
-        holder: MusicViewHolder,
+        holder: SongsViewHolder,
         position: Int,
     ) {
         val item = getItem(position)
@@ -44,7 +44,7 @@ class MusicAdapter(
     }
 
     override fun onBindViewHolder(
-        holder: MusicViewHolder,
+        holder: SongsViewHolder,
         position: Int,
         payloads: MutableList<Any>,
     ) {
@@ -56,28 +56,28 @@ class MusicAdapter(
     }
 }
 
-class MusicDiffUtil : DiffUtil.ItemCallback<Music>() {
+class MusicDiffUtil : DiffUtil.ItemCallback<Songs>() {
     override fun areItemsTheSame(
-        oldItem: Music,
-        newItem: Music,
+        oldItem: Songs,
+        newItem: Songs,
     ): Boolean = oldItem.id == newItem.id
 
     override fun areContentsTheSame(
-        oldItem: Music,
-        newItem: Music,
+        oldItem: Songs,
+        newItem: Songs,
     ): Boolean =
         oldItem.isPlaying == newItem.isPlaying &&
             oldItem.isFavourite == newItem.isFavourite
 
     override fun getChangePayload(
-        oldItem: Music,
-        newItem: Music,
+        oldItem: Songs,
+        newItem: Songs,
     ): Any? =
         if (oldItem.isPlaying != newItem.isPlaying) {
-            MusicAdapter.UPDATE_STATUS_AUDIO
+            SongsAdapter.UPDATE_STATUS_AUDIO
         } else if (oldItem.isFavourite != newItem.isFavourite) {
-            MusicAdapter.UPDATE_STATUS_FAVOURITE
+            SongsAdapter.UPDATE_STATUS_FAVOURITE
         } else {
-            MusicAdapter.UPDATE_DATA
+            SongsAdapter.UPDATE_DATA
         }
 }

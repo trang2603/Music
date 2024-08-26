@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="167dp"
+    android:layout_height="165dp"
+    android:layout_marginLeft="12dp"
+    android:layout_marginTop="28dp">
+
+    <ImageView
+        android:layout_width="165dp"
+        android:layout_height="165dp"
+        android:background="@drawable/img_album"
+        />
+
+    <ImageView
+        android:layout_width="165dp"
+        android:layout_height="78dp"
+        android:background="@drawable/img_playlist"
+        android:layout_marginTop="87dp" />
+
+    <TextView
+        android:id="@+id/tv_album_name"
+        android:layout_width="100dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="117dp"
+        android:layout_marginLeft="12dp"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/fredoka_medium"
+        android:text="Album_name"/>
+
+    <TextView
+        android:id="@+id/tv_year"
+        android:layout_width="76dp"
+        android:layout_height="17dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="136dp"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/fredoka"
+        android:text="Since: 2014"/>
+
+</FrameLayout>

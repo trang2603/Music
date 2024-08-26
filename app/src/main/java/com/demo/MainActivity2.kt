@@ -3,8 +3,9 @@ package com.demo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.demo.databinding.ActivityMainBinding
+import com.demo.music.MusicFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity2 : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_music, MusicFragment())
+                .add(R.id.container_music, MusicFragment())
                 .commit()
         }
     }

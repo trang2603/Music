@@ -1,4 +1,4 @@
-package com.demo
+package com.demo.music.songs
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,16 +8,17 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.demo.databinding.FragmentMusicBinding
+import com.demo.R
+import com.demo.databinding.FragmentSongsBinding
 import com.demo.databinding.LayoutPopupBinding
 
-class MusicFragment : Fragment() {
-    private lateinit var binding: FragmentMusicBinding
-    private lateinit var adapter: MusicAdapter
+class SongsFragment : Fragment() {
+    private lateinit var binding: FragmentSongsBinding
+    private lateinit var adapter: SongsAdapter
 
     val list =
         List(100) { i ->
-            Music(
+            Songs(
                 "$i",
                 "R.drawable.ic_launcher_foreground",
                 "Bai hat $i",
@@ -33,7 +34,7 @@ class MusicFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = FragmentMusicBinding.inflate(inflater, container, false)
+        binding = FragmentSongsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -46,7 +47,7 @@ class MusicFragment : Fragment() {
         binding.recycleView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter =
-            MusicAdapter(onItemLongClick = { position, viewClick ->
+            SongsAdapter(onItemLongClick = { position, viewClick ->
                 setupPopup(position, viewClick)
             }, onItemPlayPauseClick = { music ->
                 // TODO: update playpause of music -> update list

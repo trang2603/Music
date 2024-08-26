@@ -1,11 +1,12 @@
-package com.demo
+package com.demo.music.songs
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.demo.databinding.ItemMusicBinding
+import com.demo.R
+import com.demo.databinding.ItemSongsBinding
 
-class MusicViewHolder(
-    var binding: ItemMusicBinding,
+class SongsViewHolder(
+    var binding: ItemSongsBinding,
     val onItemLongClick: (Int, View) -> Unit,
     val onItemPlayPauseClick: (Int) -> Unit,
     val onItemHeartClick: (Int) -> Unit,
@@ -32,7 +33,7 @@ class MusicViewHolder(
         }
     }
 
-    fun bindData(music: Music) {
+    fun bindData(music: Songs) {
         binding.apply {
             img.setImageResource(R.drawable.ic_launcher_foreground)
             name.text = music.name
@@ -48,20 +49,20 @@ class MusicViewHolder(
     // UPDATE_STATUS_FAVOURITE
     fun bindData(
         payloads: MutableList<Any>,
-        music: Music,
+        music: Songs,
     ) {
         for (payload in payloads) {
             when (payload) {
-                MusicAdapter.UPDATE_STATUS_AUDIO -> {
+                SongsAdapter.UPDATE_STATUS_AUDIO -> {
                     // update playpause music.isPlaying
                     binding.playPause.setImageResource(if (music.isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
                 }
 
-                MusicAdapter.UPDATE_STATUS_FAVOURITE -> {
+                SongsAdapter.UPDATE_STATUS_FAVOURITE -> {
                     // update heart music.isFavourite
                     binding.heart.setImageResource(if (music.isFavourite) R.drawable.ic_heart_full else R.drawable.ic_heart)
                 }
-                MusicAdapter.UPDATE_DATA -> {
+                SongsAdapter.UPDATE_DATA -> {
                     bindData(music)
                 }
             }
