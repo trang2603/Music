@@ -12,16 +12,16 @@
         android:id="@+id/container_music"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-    <!--<FrameLayout
-        android:id="@+id/container_artist"
+   <!--<FrameLayout
+        android:id="@+id/container_songs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <FrameLayout
+        android:layout_height="match_parent"/>-->
+    <!--<FrameLayout
         android:id="@+id/container_album"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     <FrameLayout
         android:id="@+id/container_playlist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>&ndash;&gt;-->
+        android:layout_height="match_parent"/>-->
 </LinearLayout>

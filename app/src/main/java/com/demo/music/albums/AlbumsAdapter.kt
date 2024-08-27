@@ -6,13 +6,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.demo.databinding.ItemAlbumBinding
 
-class AlbumsAdapter : ListAdapter<Albums, AlbumsViewHolder>(AlbumsDiffCallback()) {
+class AlbumsAdapter(val onAlbumsClick: (Albums) -> Unit) : ListAdapter<Albums, AlbumsViewHolder>(AlbumsDiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): AlbumsViewHolder {
         val binding = ItemAlbumBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return AlbumsViewHolder(binding)
+        return AlbumsViewHolder(binding, onAlbumsClick = {
+            val item = getItem(it)
+            onAlbumsClick(item)
+        })
     }
 
     override fun onBindViewHolder(

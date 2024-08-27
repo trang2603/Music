@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="165dp"
         android:layout_height="165dp"
-        android:background="@drawable/img_album"
+        android:background="@drawable/img_corner"
         />
 
     <ImageView

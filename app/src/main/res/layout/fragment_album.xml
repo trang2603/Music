@@ -2,13 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#E2EBF6"
     android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"
-        android:layout_width="match_parent"
+        android:layout_marginLeft="25dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginTop="31dp" />
+        tools:listitem="@layout/item_album"
+        android:layout_marginTop="6dp" />
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.demo.databinding.ActivityMainBinding
 import com.demo.music.MusicFragment
+import com.demo.music.songs.SongsFragment
 
 class MainActivity2 : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -19,5 +20,6 @@ class MainActivity2 : AppCompatActivity() {
                 .add(R.id.container_music, MusicFragment())
                 .commit()
         }
+
     }
 }

@@ -47,7 +47,8 @@ class MusicFragment : Fragment() {
                     0 -> "Songs"
                     1 -> "Artist"
                     2 -> "Album"
-                    else -> "Playlist"
+                    3 -> "Playlist"
+                    else -> "Songs"
                 }
         }.attach()
     }

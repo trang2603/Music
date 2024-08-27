@@ -7,16 +7,16 @@ import androidx.recyclerview.widget.ListAdapter
 import com.demo.databinding.ItemArtistBinding
 
 class ArtistAdapter(
-    val onClick: (Artist) -> Unit,
+    val onArtistClick: (Artist) -> Unit,
 ) : ListAdapter<Artist, ArtistViewHolder>(ArtistDiffCalback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): ArtistViewHolder {
         val binding = ItemArtistBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ArtistViewHolder(binding, onClick = {
+        return ArtistViewHolder(binding, onArtistClick = {
             val item = getItem(it)
-            onClick.invoke(item)
+            onArtistClick.invoke(item)
         })
     }
 

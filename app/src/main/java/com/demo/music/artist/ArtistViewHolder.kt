@@ -6,13 +6,13 @@ import com.demo.databinding.ItemArtistBinding
 
 class ArtistViewHolder(
     val binding: ItemArtistBinding,
-    val onClick: (Int) -> Unit,
+    val onArtistClick: (Int) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
     init {
         binding.root.setOnClickListener {
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                onClick.invoke(position)
+                onArtistClick.invoke(position)
             }
         }
     }

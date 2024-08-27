@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.viewpager2.widget.ViewPager2
+import com.demo.MainActivity2
+import com.demo.R
 import com.demo.databinding.FragmentPlaylistBinding
 
 class PlaylistFragment : Fragment() {
@@ -35,7 +38,10 @@ class PlaylistFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         binding.rvPlaylist.layoutManager = GridLayoutManager(requireContext(), 2)
-        adapter = PlaylistAdapter()
+        adapter = PlaylistAdapter(onPlaylistClick = {
+            val viewPager = (activity as MainActivity2).findViewById<ViewPager2>(R.id.viewPager)
+            viewPager.setCurrentItem(0, true)
+        })
         binding.rvPlaylist.adapter = adapter
         adapter.submitList(list.map { it.copy() })
     }
