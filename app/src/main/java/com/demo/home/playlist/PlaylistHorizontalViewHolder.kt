@@ -3,10 +3,10 @@ package com.demo.home.playlist
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.data.Playlist
-import com.demo.databinding.PlaylistHorizontalBinding
+import com.demo.databinding.ListPlaylistHorizontalBinding
 
 class PlaylistHorizontalViewHolder(
-    val binding: PlaylistHorizontalBinding,
+    val binding: ListPlaylistHorizontalBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     private val adapter = PlaylistHorizontalAdapter()
 
