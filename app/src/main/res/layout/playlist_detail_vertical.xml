@@ -20,10 +20,21 @@
         android:src="@drawable/ic_next"/>
     
     <TextView
-        android:layout_width="179dp"
+        android:id="@+id/nameSong"
+        android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:text="Name Song - name artist"
+        android:text="Name Song - "
         android:layout_marginLeft="21dp"
+        android:layout_marginTop="179dp"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/fredoka_medium"
+        android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/nameArtist"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:text="Name Artist"
+        android:layout_marginLeft="115dp"
         android:layout_marginTop="179dp"
         android:textColor="#FFFFFF"
         android:fontFamily="@font/fredoka_medium"
@@ -43,6 +54,7 @@
         android:src="@drawable/ic_playlist"/>
     
     <TextView
+        android:id="@+id/namePlaylist"
         android:layout_width="wrap_content"
         android:layout_height="13dp"
         android:text="name playlist"

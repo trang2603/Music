@@ -5,33 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="155dp"
-        android:layout_marginTop="413dp"
-        android:layout_marginLeft="18dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="24dp"
-            android:fontFamily="@font/fredoka_semibold"
-            android:gravity="center"
-            android:text="Show that you might like"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="116dp"
-            android:layout_marginTop="39dp"
-            tools:listitem="@layout/item_playlist_home"/>
-
-    </RelativeLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="580dp"
-        tools:listitem="@layout/item_playlist_detail"
         />
 
 </RelativeLayout>
