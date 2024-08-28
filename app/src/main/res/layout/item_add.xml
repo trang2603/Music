@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="95dp"
+    android:layout_height="116dp">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_add"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="27dp"
+        />
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:fontFamily="@font/fredoka"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="72dp"
+        android:textColor="#000000"
+        android:text="Xem them"/>
+
+
+</FrameLayout>

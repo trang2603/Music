@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".MainActivity2">
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tablayout" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true" />
+
+
     <FrameLayout
-        android:id="@+id/container_music"
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-   <!--<FrameLayout
-        android:id="@+id/container_songs"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>-->
+        android:layout_height="match_parent" />
+    <!--<FrameLayout
+         android:id="@+id/container_songs"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"/>-->
     <!--<FrameLayout
         android:id="@+id/container_album"
         android:layout_width="match_parent"
@@ -24,4 +36,4 @@
         android:id="@+id/container_playlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>-->
-</LinearLayout>
+</RelativeLayout>

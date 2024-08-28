@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="328dp"
+    android:layout_height="258dp"
+    android:layout_marginLeft="32dp">
+
+    <ImageView
+        android:layout_width="328dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/item_shadow_playlist"/>
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:src="@drawable/ic_back"/>
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="292dp"
+        android:src="@drawable/ic_next"/>
+    
+    <TextView
+        android:layout_width="179dp"
+        android:layout_height="19dp"
+        android:text="Name Song - name artist"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="179dp"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/fredoka_medium"
+        android:textSize="16sp"/>
+
+    <ImageView
+        android:layout_width="110dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="208dp"
+        android:layout_marginLeft="21dp"
+        android:background="@drawable/item_name_playlist"/>
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="210dp"
+        android:layout_marginLeft="29dp"
+        android:src="@drawable/ic_playlist"/>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="13dp"
+        android:text="name playlist"
+        android:fontFamily="@font/fredoka"
+        android:textSize="11sp"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="212dp"
+        android:gravity="center"
+        android:layout_marginLeft="55dp"/>
+    
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="213dp"
+        android:layout_marginLeft="247dp"
+        android:src="@drawable/ic_more"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="213dp"
+        android:layout_marginLeft="280dp"
+        android:src="@drawable/ic_round_play"/>/>
+
+
+</FrameLayout>

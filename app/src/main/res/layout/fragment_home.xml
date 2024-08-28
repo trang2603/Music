@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="155dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginLeft="18dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:fontFamily="@font/fredoka_semibold"
+            android:gravity="center"
+            android:text="Playlist"/>
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listSong"
+            android:layout_width="match_parent"
+            android:layout_height="116dp"
+            android:layout_marginTop="39dp"
+            tools:listitem="@layout/item_playlist_home"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="155dp"
+        android:layout_marginTop="242dp"
+        android:layout_marginLeft="18dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:fontFamily="@font/fredoka_semibold"
+            android:gravity="center"
+            android:text="Recently"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listRecently"
+            android:layout_width="match_parent"
+            android:layout_height="116dp"
+            android:layout_marginTop="39dp"
+            tools:listitem="@layout/item_artist_recently"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="155dp"
+        android:layout_marginTop="413dp"
+        android:layout_marginLeft="18dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:fontFamily="@font/fredoka_semibold"
+            android:gravity="center"
+            android:text="Show that you might like"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="116dp"
+            android:layout_marginTop="39dp"
+            tools:listitem="@layout/item_playlist_home"/>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="580dp"
+        tools:listitem="@layout/item_playlist_detail"
+        />
+
+</RelativeLayout>

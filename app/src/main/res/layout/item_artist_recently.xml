@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="86dp"
+    android:layout_height="116dp">
+
+    <ImageView
+        android:id="@+id/imgArtist"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="3dp"
+        android:background="@drawable/img_artist_recently" />
+
+    <TextView
+        android:id="@+id/nameArtist"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="85dp"
+        android:fontFamily="@font/fredoka"
+        android:text="name_artist"
+        android:textColor="#000000" />
+
+
+</FrameLayout>

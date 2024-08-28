@@ -5,5 +5,6 @@
         <item>@font/fredoka</item>
         <item>@font/fredoka_light</item>
         <item>@font/fredoka_medium</item>
+        <item>@font/fredoka_semibold</item>
     </array>
 </resources>

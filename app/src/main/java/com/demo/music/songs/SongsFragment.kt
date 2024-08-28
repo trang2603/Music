@@ -9,6 +9,7 @@ import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.demo.R
+import com.demo.data.Songs
 import com.demo.databinding.FragmentSongsBinding
 import com.demo.databinding.LayoutPopupBinding
 
@@ -16,7 +17,7 @@ class SongsFragment : Fragment() {
     private lateinit var binding: FragmentSongsBinding
     private lateinit var adapter: SongsAdapter
 
-    val list =
+    var list =
         List(100) { i ->
             Songs(
                 "$i",
@@ -51,28 +52,25 @@ class SongsFragment : Fragment() {
                 setupPopup(position, viewClick)
             }, onItemPlayPauseClick = { music ->
                 // TODO: update playpause of music -> update list
-                adapter.submitList(
-                    list
-                        .map { item ->
-                            item.copy(
-                                isPlaying =
-                                    if (item.id ==
-                                        music?.id
-                                    ) {
-                                        !item.isPlaying
-                                    } else {
-                                        false
-                                    },
-                            )
-                        }.toList(),
-                )
+                list =
+                    list.map {
+                        it.copy(
+                            isPlaying =
+                                if (it.id == music?.id) {
+                                    !it.isPlaying
+                                } else {
+                                    false
+                                },
+                        )
+                    }
+                adapter.submitList(list.toList())
             }, onItemHeartClick = { music ->
                 // TODO: update isFavourite of music -> update list
-                adapter.submitList(
+                list =
                     list
                         .map { item ->
                             item.copy(
-                                isPlaying =
+                                isFavourite =
                                     if (item.id ==
                                         music?.id
                                     ) {
@@ -81,8 +79,8 @@ class SongsFragment : Fragment() {
                                         item.isFavourite
                                     },
                             )
-                        }.toList(),
-                )
+                        }
+                adapter.submitList(list.toList())
             })
         binding.recycleView.adapter = adapter
         adapter.submitList(list.map { it.copy() }.toList())
@@ -111,22 +109,44 @@ class SongsFragment : Fragment() {
         dropdownBinding.play.setOnClickListener {
             if (list[position].isPlaying) {
                 dropdownBinding.play.setImageResource(R.drawable.ic_play)
-                list[position].isPlaying = false
+//                list[position].isPlaying = false
             } else {
                 dropdownBinding.play.setImageResource(R.drawable.ic_pause)
-                list[position].isPlaying = true
+//                list[position].isPlaying = true
             }
-            adapter.submitList(list.map { it.copy() }.toList())
+            list =
+                list.map {
+                    it.copy(
+                        isPlaying =
+                            if (it.id == list[position].id) {
+                                !it.isPlaying
+                            } else {
+                                false
+                            },
+                    )
+                }
+            adapter.submitList(list.toList())
         }
         dropdownBinding.favourite.setOnClickListener {
             if (list[position].isFavourite) {
                 dropdownBinding.favourite.setImageResource(R.drawable.ic_heart)
-                list[position].isFavourite = false
+//                list[position].isFavourite = false
             } else {
                 dropdownBinding.favourite.setImageResource(R.drawable.ic_heart_full)
-                list[position].isFavourite = true
+//                list[position].isFavourite = true
             }
-            adapter.submitList(list.map { it.copy() }.toList())
+            list =
+                list.map {
+                    it.copy(
+                        isFavourite =
+                            if (it.id == list[position].id) {
+                                !it.isFavourite
+                            } else {
+                                it.isFavourite
+                            },
+                    )
+                }
+            adapter.submitList(list.toList())
         }
     }
 }

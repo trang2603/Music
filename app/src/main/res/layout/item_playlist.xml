@@ -1,40 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="167dp"
-    android:layout_height="165dp"
-    android:layout_marginLeft="12dp"
-    android:layout_marginTop="28dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/item_shadow">
 
     <ImageView
-        android:layout_width="165dp"
-        android:layout_height="165dp"
+        android:id="@+id/img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_launcher_foreground"
         android:background="@drawable/img_corner"
         />
 
-    <ImageView
-        android:layout_width="165dp"
-        android:layout_height="78dp"
-        android:background="@drawable/img_playlist"
-        android:layout_marginTop="87dp" />
+    <LinearLayout
+        android:id="@+id/fon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="19dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_album_name"
-        android:layout_width="100dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="117dp"
-        android:layout_marginLeft="12dp"
-        android:textColor="#FFFFFF"
-        android:fontFamily="@font/fredoka_medium"
-        android:text="Album_name"/>
+        <TextView
+            android:id="@+id/artistName"
+            android:layout_width="81dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/fredoka_medium"
+            android:text="Artist Name"
+            android:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/tv_year"
-        android:layout_width="76dp"
-        android:layout_height="17dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="136dp"
-        android:textColor="#FFFFFF"
-        android:fontFamily="@font/fredoka"
-        android:text="Since: 2014"/>
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="138dp"
+            android:layout_height="17dp"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/fredoka"
+            android:text="Album Name"
+            android:textColor="#90A3B6" />
+        
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="59dp"
+            android:layout_height="17dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/fredoka"
+            android:text="1:23"
+            android:textColor="#90A3B6"
+            />
+    </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

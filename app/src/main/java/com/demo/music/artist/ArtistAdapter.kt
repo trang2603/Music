@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.demo.data.Artist
 import com.demo.databinding.ItemArtistBinding
 
 class ArtistAdapter(
@@ -38,5 +39,5 @@ class ArtistDiffCalback : DiffUtil.ItemCallback<Artist>() {
     override fun areContentsTheSame(
         oldItem: Artist,
         newItem: Artist,
-    ): Boolean = oldItem.name == newItem.name
+    ): Boolean = areItemsTheSame(oldItem, newItem)
 }

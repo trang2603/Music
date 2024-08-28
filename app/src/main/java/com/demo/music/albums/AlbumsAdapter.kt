@@ -4,17 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.demo.data.Albums
 import com.demo.databinding.ItemAlbumBinding
 
-class AlbumsAdapter(val onAlbumsClick: (Albums) -> Unit) : ListAdapter<Albums, AlbumsViewHolder>(AlbumsDiffCallback()) {
+class AlbumsAdapter(
+    val onAlbumsClick: (Albums) -> Unit,
+) : ListAdapter<Albums, AlbumsViewHolder>(AlbumsDiffUtil()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): AlbumsViewHolder {
-        val binding = ItemAlbumBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemAlbumBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return AlbumsViewHolder(binding, onAlbumsClick = {
             val item = getItem(it)
-            onAlbumsClick(item)
+            onAlbumsClick.invoke(item)
         })
     }
 
@@ -23,11 +27,11 @@ class AlbumsAdapter(val onAlbumsClick: (Albums) -> Unit) : ListAdapter<Albums, A
         position: Int,
     ) {
         val item = getItem(position)
-        holder.bindData(item)
+        holder.bind(item)
     }
 }
 
-class AlbumsDiffCallback : DiffUtil.ItemCallback<Albums>() {
+class AlbumsDiffUtil : DiffUtil.ItemCallback<Albums>() {
     override fun areItemsTheSame(
         oldItem: Albums,
         newItem: Albums,

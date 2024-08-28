@@ -3,6 +3,7 @@ package com.demo.music.songs
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.R
+import com.demo.data.Songs
 import com.demo.databinding.ItemSongsBinding
 
 class SongsViewHolder(

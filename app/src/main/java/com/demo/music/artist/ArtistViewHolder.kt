@@ -2,6 +2,7 @@ package com.demo.music.artist
 
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.R
+import com.demo.data.Artist
 import com.demo.databinding.ItemArtistBinding
 
 class ArtistViewHolder(
@@ -19,6 +20,6 @@ class ArtistViewHolder(
 
     fun bindData(artist: Artist) {
         binding.img.setImageResource(R.drawable.ic_launcher_foreground)
-        binding.artistName.text = artist.name
+        binding.artistName.text = artist.songs.nameArtist
     }
 }

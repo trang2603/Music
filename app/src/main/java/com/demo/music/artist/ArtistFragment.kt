@@ -1,15 +1,14 @@
 package com.demo.music.artist
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
-import com.demo.MainActivity2
 import com.demo.R
+import com.demo.data.Artist
+import com.demo.data.Songs
 import com.demo.databinding.FragmentArtistBinding
 import com.demo.music.songs.SongsFragment
 
@@ -19,7 +18,7 @@ class ArtistFragment : Fragment() {
 
     val list =
         List(100) { i ->
-            Artist("$i", "R.drawable.ic_launcher_background", "Artist $i")
+            Artist("$i", "R.drawable.ic_launcher_background", Songs())
         }
 
     override fun onCreateView(
@@ -39,13 +38,15 @@ class ArtistFragment : Fragment() {
         binding.recycleView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter =
             ArtistAdapter(onArtistClick = { artist ->
-                /*val songsFragment = SongsFragment()
+                val songsFragment = SongsFragment()
                 val bundle = Bundle()
-                bundle.putString("artist", "${artist.name}")
-                songsFragment.arguments = bundle*/
-
-                val viewPager = (activity as MainActivity2).findViewById<ViewPager2>(R.id.viewPager)
-                viewPager.setCurrentItem(0, true)
+//                bundle.putString("artist", "${artist.name}")
+                songsFragment.arguments = bundle
+                requireActivity().supportFragmentManager.beginTransaction().apply {
+                    add(requireActivity().findViewById<View>(R.id.container).id, songsFragment)
+                    addToBackStack(SongsFragment::class.simpleName)
+                    commit()
+                }
             })
         binding.recycleView.adapter = adapter
         adapter.submitList(list)
