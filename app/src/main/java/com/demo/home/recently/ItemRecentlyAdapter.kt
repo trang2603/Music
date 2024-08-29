@@ -69,5 +69,7 @@ class ItemRecentlyDiffUtil : DiffUtil.ItemCallback<Any>() {
     override fun areContentsTheSame(
         oldItem: Any,
         newItem: Any,
-    ): Boolean = oldItem == newItem
+    ): Boolean {
+        return areItemsTheSame(oldItem, newItem)
+    }
 }
