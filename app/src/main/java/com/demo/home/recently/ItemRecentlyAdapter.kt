@@ -19,7 +19,8 @@ class ItemRecentlyAdapter : ListAdapter<Any, RecyclerView.ViewHolder>(ItemRecent
     override fun getItemViewType(position: Int): Int {
         when (getItem(position)) {
             is Artist -> return TYPE_ARTIST
-            else -> return TYPE_SONG
+            is Songs -> return TYPE_SONG
+            else -> return super.getItemViewType(position)
         }
     }
 
@@ -32,9 +33,13 @@ class ItemRecentlyAdapter : ListAdapter<Any, RecyclerView.ViewHolder>(ItemRecent
                 val binding = ItemArtistRecentlyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return ItemArtistRecentlyViewHolder(binding)
             }
-            else -> {
+            TYPE_SONG -> {
                 val binding = ItemSongRecentlyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return ItemSongRecentlyViewHolder(binding)
+            }
+            else -> {
+                val binding = ItemArtistRecentlyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                return ItemArtistRecentlyViewHolder(binding)
             }
         }
     }
@@ -46,8 +51,10 @@ class ItemRecentlyAdapter : ListAdapter<Any, RecyclerView.ViewHolder>(ItemRecent
         val item = getItem(position)
         if (holder is ItemArtistRecentlyViewHolder) {
             holder.bindData(item)
-        } else if (holder is ItemSongRecentlyViewHolder) {
-            holder.bindData(item)
+        } else {
+            if (holder is ItemSongRecentlyViewHolder) {
+                holder.bindData(item)
+            }
         }
     }
 }
@@ -69,7 +76,5 @@ class ItemRecentlyDiffUtil : DiffUtil.ItemCallback<Any>() {
     override fun areContentsTheSame(
         oldItem: Any,
         newItem: Any,
-    ): Boolean {
-        return areItemsTheSame(oldItem, newItem)
-    }
+    ): Boolean = areItemsTheSame(oldItem, newItem)
 }

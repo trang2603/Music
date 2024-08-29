@@ -8,7 +8,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginLeft="3dp"
-        android:background="@drawable/img_playlist_home" />
+        android:background="@drawable/img_song" />
 
     <TextView
         android:id="@+id/nameSong"

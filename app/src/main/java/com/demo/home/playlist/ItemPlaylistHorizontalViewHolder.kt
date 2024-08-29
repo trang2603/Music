@@ -13,7 +13,7 @@ class ItemPlaylistHorizontalViewHolder(
 
     fun bindData(playlist: Playlist) {
         binding.img.setImageResource(R.drawable.img_playlist_home)
-        binding.name.text = playlist.songs.name
+        binding.name.text = playlist.namePlaylist
     }
 
     fun bindData(
