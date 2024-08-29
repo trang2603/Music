@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgPlaylist"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginLeft="22dp"
+        android:src="@drawable/img_song"/>
+    <TextView
+        android:id="@+id/namePlaylist"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_alignLeft="@+id/imgPlaylist"
+        android:layout_marginLeft="66dp"
+        android:layout_marginTop="33dp"
+        android:fontFamily="@font/fredoka"
+        android:textSize="14dp"
+        android:textColor="#000000"
+        android:text="Name playlist"/>
+    
+    <TextView
+        android:id="@+id/mountSongs"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:text="30 songs"
+        android:fontFamily="@font/fredoka"
+        android:textSize="12dp"
+        android:layout_marginLeft="66dp"
+        android:layout_marginTop="54dp"
+        android:layout_alignLeft="@id/imgPlaylist"
+        android:textColor="#000000"
+        />
+
+</RelativeLayout>
