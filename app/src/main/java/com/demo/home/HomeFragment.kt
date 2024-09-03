@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.demo.R
 import com.demo.data.Add
 import com.demo.data.Artist
 import com.demo.data.DataUi
 import com.demo.data.Playlist
 import com.demo.data.Songs
 import com.demo.data.Type
+import com.demo.databinding.BottomSheetBinding
 import com.demo.databinding.FragmentHomeBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -118,7 +121,14 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = HomeAdapter()
+        adapter = HomeAdapter(onLongClickPlaylist = {
+            val dialog = BottomSheetDialog(requireContext())
+            val view = layoutInflater.inflate(R.layout.bottom_sheet, null)
+            dialog.setContentView(view)
+            dialog.show()
+
+
+        })
         binding.recycleView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.recycleView.adapter = adapter

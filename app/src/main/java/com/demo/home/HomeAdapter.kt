@@ -16,7 +16,8 @@ import com.demo.home.playlist.PlaylistHorizontalViewHolder
 import com.demo.home.playlitvertical.PlaylistVerticalViewHolder
 import com.demo.home.recently.RecentlyViewHolder
 
-class HomeAdapter : ListAdapter<DataUi, RecyclerView.ViewHolder>(HomeItemCallback()) {
+class HomeAdapter(val onLongClickPlaylist: (DataUi) -> Unit) : ListAdapter<DataUi, RecyclerView.ViewHolder>(HomeItemCallback()) {
+
     // lay item o vi tri position
     override fun getItem(position: Int): DataUi = super.getItem(position)
 
@@ -72,7 +73,10 @@ class HomeAdapter : ListAdapter<DataUi, RecyclerView.ViewHolder>(HomeItemCallbac
                         parent,
                         false,
                     )
-                return PlaylistVerticalViewHolder(binding)
+                return PlaylistVerticalViewHolder(binding, onLongClickPlaylist = {
+                    val item = getItem(it)
+                    onLongClickPlaylist.invoke(item)
+                })
             }
         }
     }

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_bottom_sheet">
 
     <ImageView
         android:id="@+id/imgPlaylist"
         android:layout_width="54dp"
         android:layout_height="54dp"
-        android:layout_marginTop="19dp"
         android:layout_marginLeft="22dp"
-        android:src="@drawable/img_song"/>
+        android:layout_marginTop="19dp"
+        android:src="@drawable/img_song" />
+
     <TextView
         android:id="@+id/namePlaylist"
         android:layout_width="wrap_content"
@@ -18,21 +20,56 @@
         android:layout_marginLeft="66dp"
         android:layout_marginTop="33dp"
         android:fontFamily="@font/fredoka"
-        android:textSize="14dp"
+        android:text="Name playlist"
         android:textColor="#000000"
-        android:text="Name playlist"/>
-    
+        android:textSize="14dp" />
+
     <TextView
         android:id="@+id/mountSongs"
         android:layout_width="wrap_content"
         android:layout_height="15dp"
-        android:text="30 songs"
-        android:fontFamily="@font/fredoka"
-        android:textSize="12dp"
+        android:layout_alignLeft="@id/imgPlaylist"
         android:layout_marginLeft="66dp"
         android:layout_marginTop="54dp"
-        android:layout_alignLeft="@id/imgPlaylist"
+        android:fontFamily="@font/fredoka"
+        android:text="30 songs"
         android:textColor="#000000"
-        />
+        android:textSize="12dp" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_below="@id/imgPlaylist"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="22dp"
+        android:src="@drawable/ic_remove" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginLeft="61dp"
+        android:layout_marginTop="98dp"
+        android:fontFamily="@font/fredoka"
+        android:text="Remove Playlist"
+        android:textColor="#000000"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="137dp"
+        android:src="@drawable/ic_goto_playlist" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginLeft="61dp"
+        android:layout_marginTop="140dp"
+        android:fontFamily="@font/fredoka"
+        android:text="Go to Playlist"
+        android:textColor="#000000"
+        android:textSize="14sp" />
+
 
 </RelativeLayout>

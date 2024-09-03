@@ -6,6 +6,7 @@
     android:layout_marginLeft="32dp">
 
     <ImageView
+        android:id="@+id/imgPlaylist"
         android:layout_width="328dp"
         android:layout_height="match_parent"
         android:src="@drawable/item_shadow_playlist"/>
