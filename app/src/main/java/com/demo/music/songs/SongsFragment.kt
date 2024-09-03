@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.demo.R
@@ -147,6 +148,10 @@ class SongsFragment : Fragment() {
                     )
                 }
             adapter.submitList(list.toList())
+        }
+
+        dropdownBinding.add.setOnClickListener {
+            val dialog = AlertDialog.Builder(requireContext())
         }
     }
 }

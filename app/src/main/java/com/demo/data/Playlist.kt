@@ -7,4 +7,5 @@ data class Playlist(
     val date: String,
     val time: String,
     val songs: Songs,
+    val totalSongs: String,
 )

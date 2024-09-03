@@ -1,6 +1,5 @@
 package com.demo.data
 
-class Add(
+class AddPlaylist(
     val id: String,
-    val songs: Songs,
 )
