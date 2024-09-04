@@ -10,14 +10,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.demo.R
+import com.demo.data.AddPlaylist
+import com.demo.data.DataPlaylistUi
+import com.demo.data.Playlist
 import com.demo.data.Songs
 import com.demo.databinding.FragmentSongsBinding
+import com.demo.databinding.LayoutDialogBinding
 import com.demo.databinding.LayoutPopupBinding
 
 class SongsFragment : Fragment() {
     private lateinit var binding: FragmentSongsBinding
     private lateinit var adapter: SongsAdapter
-
     var list =
         List(100) { i ->
             Songs(
@@ -151,7 +154,22 @@ class SongsFragment : Fragment() {
         }
 
         dropdownBinding.add.setOnClickListener {
-            val dialog = AlertDialog.Builder(requireContext())
+            val dialogBuilder = AlertDialog.Builder(requireContext())
+            val binding = LayoutDialogBinding.inflate(LayoutInflater.from(requireContext()))
+            val viewHold = ShowDialogViewHolder(binding)
+            val dataList = DataPlaylistUi(
+                dataPlaylistUi = listOf(
+                    AddPlaylist("1"),
+                    Playlist("1", "", "Playlist 1", "", "", Songs(), "20 songs"),
+                    Playlist("1", "", "Playlist 1", "", "", Songs(), "20 songs"),
+                    Playlist("1", "", "Playlist 1", "", "", Songs(), "20 songs"),
+                    Playlist("1", "", "Playlist 1", "", "", Songs(), "20 songs")
+                )
+            )
+            viewHold.bindData(dataList)
+            dialogBuilder.setView(binding.root)
+            val dialog = dialogBuilder.create()
+            dialog.show()
         }
     }
 }

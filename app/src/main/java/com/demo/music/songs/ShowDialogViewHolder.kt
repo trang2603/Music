@@ -2,7 +2,10 @@ package com.demo.music.songs
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.demo.data.AddPlaylist
 import com.demo.data.DataPlaylistUi
+import com.demo.data.Playlist
+import com.demo.data.Songs
 import com.demo.databinding.LayoutDialogBinding
 
 class ShowDialogViewHolder(

@@ -61,7 +61,7 @@ class PlaylistFragment : Fragment() {
 
     val list =
         List(100) { i ->
-            Playlist("$i", "R.drawable.ic_launcher_foreground", "name playlist $i","date$i", "time$i", Songs())
+            Playlist("$i", "R.drawable.ic_launcher_foreground", "name playlist $i","date$i", "time$i", Songs(), "20 songs")
         }
 
     override fun onCreateView(
