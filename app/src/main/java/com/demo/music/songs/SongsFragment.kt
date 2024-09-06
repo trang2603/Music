@@ -8,19 +8,22 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.demo.R
-import com.demo.data.AddPlaylist
-import com.demo.data.DataPlaylistUi
-import com.demo.data.Playlist
 import com.demo.data.Songs
 import com.demo.databinding.FragmentSongsBinding
 import com.demo.databinding.LayoutDialogBinding
 import com.demo.databinding.LayoutPopupBinding
+import com.demo.music.dialog.PlaylistDialogAdapter
+import com.demo.music.viewmodel.DialogViewModel
+import kotlinx.coroutines.launch
 
 class SongsFragment : Fragment() {
     private lateinit var binding: FragmentSongsBinding
     private lateinit var adapter: SongsAdapter
+    private lateinit var adapterDialog: PlaylistDialogAdapter
+    private val viewModel: DialogViewModel = DialogViewModel()
     var list =
         List(100) { i ->
             Songs(
@@ -154,19 +157,33 @@ class SongsFragment : Fragment() {
         }
 
         dropdownBinding.add.setOnClickListener {
-            val dialogBuilder = AlertDialog.Builder(requireContext())
             val binding = LayoutDialogBinding.inflate(LayoutInflater.from(requireContext()))
-            val viewHold = ShowDialogViewHolder(binding)
-            val dataList = DataPlaylistUi(
-                dataPlaylistUi = listOf(
-                    AddPlaylist("1"),
-                    Playlist("1", "", "Playlist 1", "", "", Songs(), "20 songs"),
-                    Playlist("1", "", "Playlist 1", "", "", Songs(), "20 songs"),
-                    Playlist("1", "", "Playlist 1", "", "", Songs(), "20 songs"),
-                    Playlist("1", "", "Playlist 1", "", "", Songs(), "20 songs")
+            binding.recycleView.layoutManager =
+                LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
+            adapterDialog =
+                PlaylistDialogAdapter(
+                    onCheckboxClick = { itemClick ->
+                        viewModel.clickCheckbox(
+                            itemClick,
+                            callbackButton = { updateButton ->
+                                binding.button.isEnabled = updateButton.isNotEmpty()
+                            },
+                        )
+                    },
+                    onAddPlaylist = { namePlaylist ->
+                        viewModel.clickAddPlaylist(namePlaylist)
+                    },
                 )
-            )
-            viewHold.bindData(dataList)
+            binding.recycleView.adapter = adapterDialog
+            viewModel.dataList()
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.dataList.collect { dataList ->
+                    adapterDialog.submitList(dataList.toList())
+                }
+            }
+
+            val dialogBuilder = AlertDialog.Builder(requireContext())
             dialogBuilder.setView(binding.root)
             val dialog = dialogBuilder.create()
             dialog.show()

@@ -8,4 +8,5 @@ data class Playlist(
     val time: String,
     val songs: Songs,
     val totalSongs: String,
+    val isCheck: Boolean = false,
 )

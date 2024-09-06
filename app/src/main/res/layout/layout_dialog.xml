@@ -2,36 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="311dp"
     android:layout_height="408dp">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="17dp"
-        android:text="Playlist"
-        android:fontFamily="@font/fredoka_medium"
-        android:textSize="14dp"
         android:layout_marginTop="21dp"
+        android:fontFamily="@font/fredoka_medium"
         android:gravity="center"
-        />
+        android:text="Playlist"
+        android:textSize="14dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="69dp"/>
+        android:layout_height="165dp"
+        android:layout_marginLeft="33dp"
+        android:layout_marginTop="69dp" />
 
     <Button
+        android:id="@+id/button"
         android:layout_width="159dp"
         android:layout_height="40dp"
-        android:text="Confirm"
-        android:layout_marginTop="348dp"
-        android:gravity="center"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/custom_layout_button"
-        android:textColor="@color/white"
-        android:fontFamily="@font/fredoka_medium"
-        android:textSize="14dp"
-        android:textAllCaps="false"
+        android:layout_marginTop="300dp"
+        android:background="@drawable/background_button_selector"
         android:enabled="false"
-        android:backgroundTint="#DADADA"
-        />
+        android:fontFamily="@font/fredoka_medium"
+        android:gravity="center"
+        android:text="Confirm"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="14dp" />
 
 </RelativeLayout>
