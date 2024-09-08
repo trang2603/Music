@@ -163,12 +163,7 @@ class SongsFragment : Fragment() {
             adapterDialog =
                 PlaylistDialogAdapter(
                     onCheckboxClick = { itemClick ->
-                        viewModel.clickCheckbox(
-                            itemClick,
-                            callbackButton = { updateButton ->
-                                binding.button.isEnabled = updateButton.isNotEmpty()
-                            },
-                        )
+                        viewModel.clickCheckbox(itemClick)
                     },
                     onAddPlaylist = { namePlaylist ->
                         viewModel.clickAddPlaylist(namePlaylist)
@@ -178,8 +173,18 @@ class SongsFragment : Fragment() {
             viewModel.dataList()
 
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.dataList.collect { dataList ->
-                    adapterDialog.submitList(dataList.toList())
+                launch {
+                    viewModel.initData()
+                }
+                launch {
+                    viewModel.dataList.collect { dataList ->
+                        adapterDialog.submitList(dataList.toList())
+                    }
+                }
+                launch {
+                    viewModel.isButtonEnabled.collect{ isEnabled ->
+                        binding.button.isEnabled = isEnabled
+                    }
                 }
             }
 

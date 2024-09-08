@@ -11,50 +11,6 @@ import com.demo.data.Playlist
 import com.demo.data.Songs
 import com.demo.databinding.FragmentPlaylistBinding
 import com.demo.music.songs.SongsFragment
-
-/*
-class PlaylistFragment : Fragment() {
-    private lateinit var binding: FragmentPlaylistBinding
-    private lateinit var adapter: PlaylistAdapter
-
-    val list =
-        List(100) { i ->
-            Albums(
-                id = i.toString(),
-                albumName = "Album $i",
-                year = "Since: 2014",
-            )
-        }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        binding = FragmentPlaylistBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
-        binding.rvPlaylist.layoutManager = GridLayoutManager(requireContext(), 2)
-        adapter =
-            PlaylistAdapter(onPlaylistClick = {
-                val songsFragment = SongsFragment()
-                requireActivity().supportFragmentManager.beginTransaction().apply {
-                    add(requireActivity().findViewById<View>(R.id.container).id, songsFragment)
-                    addToBackStack(SongsFragment::class.simpleName)
-                    commit()
-                }
-            })
-        binding.rvPlaylist.adapter = adapter
-        adapter.submitList(list.map { it.copy() })
-    }
-}
-*/
-
 class PlaylistFragment : Fragment() {
     private lateinit var binding: FragmentPlaylistBinding
     private lateinit var adapter: PlaylistAdapter

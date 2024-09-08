@@ -26,10 +26,6 @@ class HomeAdapter(val onLongClickPlaylist: (DataUi) -> Unit) : ListAdapter<DataU
         val item: DataUi = getItem(position)
         val itemType = item.type.hashCode()
         return itemType
-        /*var itemType = item.type
-        if(itemType == Type.TYPE_PLAYLIST_HORIZONTAL) {
-            return PLAYLIST_HORIZONTAL
-        }*/
     }
 
     override fun onCreateViewHolder(
