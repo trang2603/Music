@@ -5,27 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.demo.R
 import com.demo.data.Albums
 import com.demo.data.Songs
 import com.demo.databinding.FragmentAlbumBinding
 import com.demo.music.songs.SongsFragment
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class AlbumsFragment : Fragment() {
     private lateinit var binding: FragmentAlbumBinding
     private lateinit var adapter: AlbumsAdapter
-
-    val list =
-        List(100) { i ->
-            Albums(
-                id = i.toString(),
-                albumName = "Album $i",
-                year = "Since: 2014",
-                songs = Songs(),
-            )
-        }
-
+    private val viewModel: AlbumsViewModel = AlbumsViewModel()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,6 +43,15 @@ class AlbumsFragment : Fragment() {
                 }
             })
         binding.rvAlbum.adapter = adapter
-        adapter.submitList(list.map { it.copy() })
+        viewLifecycleOwner.lifecycleScope.launch {
+            launch {
+                viewModel.initData()
+            }
+            launch {
+                viewModel.listAlbums.collect {listAlbums ->
+                    adapter.submitList(listAlbums.toList())
+                }
+            }
+        }
     }
 }

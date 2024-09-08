@@ -1,4 +1,4 @@
-package com.demo.music.viewmodel
+package com.demo.music.dialog
 
 import androidx.lifecycle.ViewModel
 import com.demo.data.AddPlaylist
@@ -8,8 +8,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.UUID
 
@@ -75,12 +73,6 @@ class DialogViewModel : ViewModel() {
             val updateList = _dataList.value.toMutableList()
             updateList.add(itemPlaylist)
             _dataList.value = updateList
-        }
-    }
-
-    fun dataList() {
-        scope.launch {
-            _dataList.value
         }
     }
 }
