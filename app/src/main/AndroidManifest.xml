@@ -43,7 +43,7 @@
 <!--            </intent-filter>&ndash;&gt;-->
 <!--        </activity>-->
         <activity
-            android:name=".MainActivity2"
+            android:name=".screen.MainActivity2"
             android:exported="true">
 
             <intent-filter>
