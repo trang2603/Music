@@ -4,6 +4,7 @@ import com.demo.base.BaseMVVMViewModel
 import com.demo.data.model.AddPlaylist
 import com.demo.data.model.Playlist
 import com.demo.data.model.Songs
+import java.util.UUID
 
 class DialogViewModel :
     BaseMVVMViewModel<DialogViewModel.State, DialogViewModel.Action, DialogViewModel.Mutation, DialogViewModel.Effect>() {
@@ -29,7 +30,12 @@ class DialogViewModel :
 
             is Action.ClickCheckBox -> {
                 val newList = updateList(action.itemClick)
-                sendMutation(Mutation.UpdateList(newList))
+                sendMutation(Mutation.UpdateList())
+            }
+
+            is Action.AddPlaylist -> {
+                val newPlaylist = addPlaylist(action.namePlaylist)
+                sendMutation(Mutation.AddPlaylist(newPlaylist.toString()))
             }
         }
     }
@@ -65,45 +71,47 @@ class DialogViewModel :
         )
 
     private fun updateList(itemClick: Playlist) {
+        val list = state.value.data
         val updatedList =
-
-            _dataList.value.map { item ->
+            list?.map { item ->
                 if (item is Playlist && item.id == itemClick.id) {
-                    //                    Thread.sleep(1000)
                     item.copy(isCheck = !item.isCheck)
                 } else {
                     item
                 }
             }
 
-        _dataList.emit(updatedList)
+//        list.emit(updatedList)
 
         val itemCheck =
-            updatedList.filter { item ->
+            updatedList?.filter { item ->
                 item is Playlist && item.isCheck
             }
         updateButton(itemCheck)
     }
-    /*
-            fun updateButton(itemCheck: List<Any>) {
-                _isButtonEnabled.value = itemCheck.isNotEmpty()
-            }
 
-            fun clickAddPlaylist(namePlaylist: String) {
-                scope.launch {
-                    val uuid = UUID.randomUUID().toString()
-                    val itemPlaylist = Playlist("$uuid", "", namePlaylist, "", "", Songs(), "1 song", false)
-                    val updateList = _dataList.value.toMutableList()
-                    updateList.add(itemPlaylist)
-                    _dataList.emit(updateList)
-                }
-            }*/
+    fun updateButton(itemCheck: List<Any>?) {
+        _isButtonEnabled.value = itemCheck.isNotEmpty()
+    }
+
+    fun addPlaylist(namePlaylist: String) {
+        val list = state.value.data
+        val uuid = UUID.randomUUID().toString()
+        val itemPlaylist = Playlist("$uuid", "", namePlaylist, "", "", Songs(), "1 song", false)
+        val updateList = list?.toMutableList()
+        updateList?.add(itemPlaylist)
+//        _dataList.emit(updateList)
+    }
 
     sealed class Action : BaseMVVMViewModel.MVVMAction {
         data object GetList : Action()
 
         data class ClickCheckBox(
             val itemClick: Playlist,
+        ) : Action()
+
+        data class AddPlaylist(
+            val namePlaylist: String,
         ) : Action()
     }
 
@@ -114,6 +122,10 @@ class DialogViewModel :
 
         data class UpdateList(
             val data: Playlist?,
+        ) : Mutation()
+
+        data class AddPlaylist(
+            val namePlaylist: String,
         ) : Mutation()
     }
 

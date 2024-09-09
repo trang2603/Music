@@ -115,7 +115,7 @@ class SongsFragment : BaseMVVMFragment<DialogViewModel>() {
                         viewModelDialog.sendAction(DialogViewModel.Action.ClickCheckBox(itemClick))
                     },
                     onAddPlaylist = { namePlaylist ->
-                        viewModel.clickAddPlaylist(namePlaylist)
+                        viewModelDialog.sendAction(DialogViewModel.Action.AddPlaylist)
                     },
                 )
             binding.recycleView.adapter = adapterDialog
