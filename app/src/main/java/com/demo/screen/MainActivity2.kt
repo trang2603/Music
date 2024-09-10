@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.demo.R
 import com.demo.databinding.ActivityMainBinding
+import com.demo.screen.favourite.FavouriteFragment
+import com.demo.screen.home.HomeFragment
 import com.demo.screen.music.MusicFragment
 import com.demo.screen.setting.SettingFragment
 import com.google.android.material.tabs.TabLayoutMediator
@@ -13,11 +15,9 @@ class MainActivity2 : AppCompatActivity() {
 
     val listFragment =
         listOf(
-            com.demo.screen.home
-                .HomeFragment(),
+            HomeFragment(),
             MusicFragment(),
-            com.demo.screen.favourite
-                .FavouriteFragment(),
+            FavouriteFragment(),
             SettingFragment(),
         )
 

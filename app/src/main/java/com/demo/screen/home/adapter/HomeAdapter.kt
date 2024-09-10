@@ -11,10 +11,10 @@ import com.demo.databinding.ListFavouriteHorizontalBinding
 import com.demo.databinding.ListPlaylistHorizontalBinding
 import com.demo.databinding.ListRecentlyHorizontalBinding
 import com.demo.databinding.PlaylistDetailVerticalBinding
-import com.demo.screen.home.adapter.favourite.FavouriteViewHolder
-import com.demo.screen.home.adapter.playlist.PlaylistHorizontalViewHolder
+import com.demo.screen.home.adapter.playlisthorizontal.PlaylistHorizontalViewHolder
 import com.demo.screen.home.adapter.playlitvertical.PlaylistVerticalViewHolder
 import com.demo.screen.home.adapter.recently.RecentlyViewHolder
+import com.demo.screen.home.adapter.showfavourite.FavouriteViewHolder
 
 class HomeAdapter(
     val onLongClickPlaylist: (DataUi) -> Unit,

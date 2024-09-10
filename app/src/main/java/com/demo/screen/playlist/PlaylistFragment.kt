@@ -1,4 +1,4 @@
-package com.demo.screen.home
+package com.demo.screen.playlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,32 +8,34 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.demo.R
 import com.demo.base.BaseMVVMFragment
-import com.demo.databinding.FragmentHomeBinding
-import com.demo.screen.home.adapter.HomeAdapter
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.demo.databinding.FragmentPlaylistBinding
+import com.demo.screen.playlist.adapter.PlaylistAdapter
+import com.demo.screen.songs.SongsFragment
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
-class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
-    private lateinit var binding: FragmentHomeBinding
-    private val adapter: HomeAdapter =
-        HomeAdapter(onLongClickPlaylist = {
-            val dialog = BottomSheetDialog(requireContext())
-            val view = layoutInflater.inflate(R.layout.bottom_sheet, null)
-            dialog.setContentView(view)
-            dialog.show()
+class PlaylistFragment : BaseMVVMFragment<PlaylistViewModel>() {
+    private lateinit var binding: FragmentPlaylistBinding
+    private val adapter: PlaylistAdapter =
+        PlaylistAdapter(onPlaylistClick = {
+            val songsFragment = SongsFragment()
+            requireActivity().supportFragmentManager.beginTransaction().apply {
+                add(requireActivity().findViewById<View>(R.id.container).id, songsFragment)
+                addToBackStack(SongsFragment::class.simpleName)
+                commit()
+            }
         })
 
-    private val viewModel: HomeViewModel = HomeViewModel()
+    private val viewModel: PlaylistViewModel = PlaylistViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentPlaylistBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -45,11 +47,10 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
         binding.recycleView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.recycleView.adapter = adapter
-        viewModel.sendAction(HomeViewModel.Action.GetList)
+        viewModel.sendAction(PlaylistViewModel.Action.GetList)
     }
 
     override fun observerState() {
-        // handle update khi state change
         viewModel.state
             .map { it.data }
             .distinctUntilChanged()
@@ -59,6 +60,5 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
     }
 
     override fun observerEffect() {
-        // handle update khi co effect
     }
 }

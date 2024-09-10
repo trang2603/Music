@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.demo.databinding.FragmentMusicBinding
-import com.demo.screen.music.albums.AlbumsFragment
-import com.demo.screen.music.artist.ArtistFragment
-import com.demo.screen.music.playlist.PlaylistFragment
-import com.demo.screen.music.songs.SongsFragment
+import com.demo.screen.albums.adapter.AlbumsFragment
+import com.demo.screen.artist.ArtistFragment
+import com.demo.screen.music.adapter.MusicAdapter
+import com.demo.screen.playlist.PlaylistFragment
+import com.demo.screen.songs.SongsFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MusicFragment : Fragment() {

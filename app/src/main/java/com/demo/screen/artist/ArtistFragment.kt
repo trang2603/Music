@@ -1,4 +1,4 @@
-package com.demo.screen.home
+package com.demo.screen.artist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,32 +8,35 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.demo.R
 import com.demo.base.BaseMVVMFragment
-import com.demo.databinding.FragmentHomeBinding
-import com.demo.screen.home.adapter.HomeAdapter
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.demo.databinding.FragmentArtistBinding
+import com.demo.screen.artist.adapter.ArtistAdapter
+import com.demo.screen.songs.SongsFragment
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
-class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
-    private lateinit var binding: FragmentHomeBinding
-    private val adapter: HomeAdapter =
-        HomeAdapter(onLongClickPlaylist = {
-            val dialog = BottomSheetDialog(requireContext())
-            val view = layoutInflater.inflate(R.layout.bottom_sheet, null)
-            dialog.setContentView(view)
-            dialog.show()
+class ArtistFragment : BaseMVVMFragment<ArtistViewModel>() {
+    private lateinit var binding: FragmentArtistBinding
+    private val adapter: ArtistAdapter =
+        ArtistAdapter(onArtistClick = { artist ->
+            val songsFragment = SongsFragment()
+            val bundle = Bundle()
+            songsFragment.arguments = bundle
+            requireActivity().supportFragmentManager.beginTransaction().apply {
+                add(requireActivity().findViewById<View>(R.id.container).id, songsFragment)
+                addToBackStack(SongsFragment::class.simpleName)
+                commit()
+            }
         })
-
-    private val viewModel: HomeViewModel = HomeViewModel()
+    private val viewModel: ArtistViewModel = ArtistViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentArtistBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -42,14 +45,12 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recycleView.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.recycleView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.recycleView.adapter = adapter
-        viewModel.sendAction(HomeViewModel.Action.GetList)
+        viewModel.sendAction(ArtistViewModel.Action.GetList)
     }
 
     override fun observerState() {
-        // handle update khi state change
         viewModel.state
             .map { it.data }
             .distinctUntilChanged()
@@ -59,6 +60,5 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
     }
 
     override fun observerEffect() {
-        // handle update khi co effect
     }
 }
