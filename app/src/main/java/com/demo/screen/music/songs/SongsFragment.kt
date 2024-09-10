@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.PopupWindow
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
@@ -24,7 +25,15 @@ import kotlinx.coroutines.flow.onEach
 class SongsFragment : BaseMVVMFragment<DialogViewModel>() {
     private lateinit var binding: FragmentSongsBinding
     private lateinit var adapter: SongsAdapter
-    private lateinit var adapterDialog: PlaylistDialogAdapter
+    private val adapterDialog: PlaylistDialogAdapter = PlaylistDialogAdapter(
+        onCheckboxClick = { itemClick ->
+//                        viewModel.clickCheckbox(itemClick)
+            viewModelDialog.sendAction(DialogViewModel.Action.ClickCheckBox(itemClick))
+        },
+        onAddPlaylist = { namePlaylist ->
+            viewModelDialog.sendAction(DialogViewModel.Action.AddPlaylist(namePlaylist))
+        },
+    )
     private val viewModelDialog: DialogViewModel = DialogViewModel()
     private val viewModelSongs: SongsViewModel = SongsViewModel()
 
@@ -105,26 +114,16 @@ class SongsFragment : BaseMVVMFragment<DialogViewModel>() {
             }.launchIn(lifecycleScope)
 
         dropdownBinding.add.setOnClickListener {
-            val binding = LayoutDialogBinding.inflate(LayoutInflater.from(requireContext()))
-            binding.recycleView.layoutManager =
-                LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
-            adapterDialog =
-                PlaylistDialogAdapter(
-                    onCheckboxClick = { itemClick ->
-//                        viewModel.clickCheckbox(itemClick)
-                        viewModelDialog.sendAction(DialogViewModel.Action.ClickCheckBox(itemClick))
-                    },
-                    onAddPlaylist = { namePlaylist ->
-                        viewModelDialog.sendAction(DialogViewModel.Action.AddPlaylist)
-                    },
-                )
-            binding.recycleView.adapter = adapterDialog
+            val binding2 = LayoutDialogBinding.inflate(LayoutInflater.from(requireContext()))
+            binding2.recycleView.layoutManager =
+                LinearLayoutManager(binding2.root.context, LinearLayoutManager.VERTICAL, false)
+            binding2.recycleView.adapter = adapterDialog
             viewModelDialog.sendAction(DialogViewModel.Action.GetList)
 
-            viewModel.isButtonEnabled
-                .onEach { isEnabled ->
-                    binding.button.isEnabled = isEnabled
-                }.launchIn(lifecycleScope)
+            /* viewModel.isButtonEnabled
+                 .onEach { isEnabled ->
+                     binding.button.isEnabled = isEnabled
+                 }.launchIn(lifecycleScope)*/
 
             val dialogBuilder = AlertDialog.Builder(requireContext())
             dialogBuilder.setView(binding.root)
@@ -142,9 +141,18 @@ class SongsFragment : BaseMVVMFragment<DialogViewModel>() {
                     it?.toList() ?: listOf(),
                 )
             }.launchIn(lifecycleScope)
+
+        viewModelDialog.state.map { state ->
+            state.isButtonEnable
+        }.distinctUntilChanged().onEach { isEnabled ->
+            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.layout_dialog, null)
+            val button = dialogView.findViewById<Button>(R.id.button)
+            button.isEnabled = isEnabled
+        }.launchIn(lifecycleScope)
+
     }
 
     override fun observerEffect() {
-        TODO("Not yet implemented")
+
     }
 }

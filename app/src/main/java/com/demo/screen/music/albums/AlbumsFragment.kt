@@ -9,7 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.demo.R
 import com.demo.databinding.FragmentAlbumBinding
-import com.demo.music.songs.SongsFragment
+import com.demo.screen.music.songs.SongsFragment
 import kotlinx.coroutines.launch
 
 class AlbumsFragment : Fragment() {

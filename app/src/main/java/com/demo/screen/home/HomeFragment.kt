@@ -18,7 +18,13 @@ import kotlinx.coroutines.flow.onEach
 
 class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var adapter: HomeAdapter
+    private val adapter: HomeAdapter = HomeAdapter(onLongClickPlaylist = {
+        val dialog = BottomSheetDialog(requireContext())
+        val view = layoutInflater.inflate(R.layout.bottom_sheet, null)
+        dialog.setContentView(view)
+        dialog.show()
+    })
+
     private val viewModel: HomeViewModel = HomeViewModel()
 
     override fun onCreateView(
@@ -35,13 +41,6 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        adapter =
-            HomeAdapter(onLongClickPlaylist = {
-                val dialog = BottomSheetDialog(requireContext())
-                val view = layoutInflater.inflate(R.layout.bottom_sheet, null)
-                dialog.setContentView(view)
-                dialog.show()
-            })
         binding.recycleView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.recycleView.adapter = adapter

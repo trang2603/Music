@@ -10,7 +10,7 @@ import com.demo.R
 import com.demo.data.model.Playlist
 import com.demo.data.model.Songs
 import com.demo.databinding.FragmentPlaylistBinding
-import com.demo.music.songs.SongsFragment
+import com.demo.screen.music.songs.SongsFragment
 
 class PlaylistFragment : Fragment() {
     private lateinit var binding: FragmentPlaylistBinding

@@ -10,7 +10,7 @@ import com.demo.R
 import com.demo.data.model.Artist
 import com.demo.data.model.Songs
 import com.demo.databinding.FragmentArtistBinding
-import com.demo.music.songs.SongsFragment
+import com.demo.screen.music.songs.SongsFragment
 
 class ArtistFragment : Fragment() {
     private lateinit var binding: FragmentArtistBinding

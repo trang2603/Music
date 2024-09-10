@@ -29,13 +29,13 @@ class DialogViewModel :
             }
 
             is Action.ClickCheckBox -> {
-                val newList = updateList(action.itemClick)
-                sendMutation(Mutation.UpdateList())
+                val updateList = updateList(action.itemClick)
+                sendMutation(Mutation.ClickCheckBox(updateList))
             }
 
             is Action.AddPlaylist -> {
-                val newPlaylist = addPlaylist(action.namePlaylist)
-                sendMutation(Mutation.AddPlaylist(newPlaylist.toString()))
+                val newList = addPlaylist(action.namePlaylist)
+                sendMutation(Mutation.AddPlaylist(newList))
             }
         }
     }
@@ -49,8 +49,12 @@ class DialogViewModel :
                 state.copy(data = mutation.data)
             }
 
-            is Mutation.UpdateList -> {
-                state.copy(isCheck = mutation.data?.isCheck)
+            is Mutation.ClickCheckBox -> {
+                state.copy(data = mutation.data, isButtonEnable = mutation.data?.any {it is Playlist && it.isCheck} == true)
+            }
+
+            is Mutation.AddPlaylist -> {
+                state.copy(data =  mutation.data)
             }
         }
 
@@ -70,37 +74,24 @@ class DialogViewModel :
             Playlist("11", "", "Playlist 11", "", "", Songs(), "27 songs"),
         )
 
-    private fun updateList(itemClick: Playlist) {
+    private fun updateList(itemClick: Playlist): List<Any>? {
         val list = state.value.data
-        val updatedList =
-            list?.map { item ->
-                if (item is Playlist && item.id == itemClick.id) {
-                    item.copy(isCheck = !item.isCheck)
-                } else {
-                    item
-                }
+        return list?.map { item ->
+            if (item is Playlist && item.id == itemClick.id) {
+                item.copy(isCheck = !item.isCheck)
+            } else {
+                item
             }
-
-//        list.emit(updatedList)
-
-        val itemCheck =
-            updatedList?.filter { item ->
-                item is Playlist && item.isCheck
-            }
-        updateButton(itemCheck)
+        }
     }
 
-    fun updateButton(itemCheck: List<Any>?) {
-        _isButtonEnabled.value = itemCheck.isNotEmpty()
-    }
-
-    fun addPlaylist(namePlaylist: String) {
+    fun addPlaylist(namePlaylist: String): List<Any>? {
         val list = state.value.data
         val uuid = UUID.randomUUID().toString()
         val itemPlaylist = Playlist("$uuid", "", namePlaylist, "", "", Songs(), "1 song", false)
         val updateList = list?.toMutableList()
         updateList?.add(itemPlaylist)
-//        _dataList.emit(updateList)
+        return updateList
     }
 
     sealed class Action : BaseMVVMViewModel.MVVMAction {
@@ -120,18 +111,18 @@ class DialogViewModel :
             val data: List<Any>?,
         ) : Mutation()
 
-        data class UpdateList(
-            val data: Playlist?,
+        data class ClickCheckBox(
+            val data: List<Any>?,
         ) : Mutation()
 
         data class AddPlaylist(
-            val namePlaylist: String,
+            val data: List<Any>?,
         ) : Mutation()
     }
 
     data class State(
         val data: List<Any>? = null,
-        val isCheck: Boolean? = null,
+        val isButtonEnable: Boolean = false,
     ) : BaseMVVMViewModel.MVVMState
 
     sealed class Effect : BaseMVVMViewModel.MVVMEffect

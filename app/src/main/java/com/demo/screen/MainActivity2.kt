@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.demo.R
 import com.demo.databinding.ActivityMainBinding
-import com.demo.music.MusicFragment
+import com.demo.screen.music.MusicFragment
 import com.demo.screen.setting.SettingFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
