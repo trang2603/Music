@@ -8,26 +8,24 @@ import com.demo.base.BaseMVVMFragment
 import com.demo.data.model.Songs
 import com.demo.databinding.FragmentMinibarBinding
 import com.demo.screen.minibar.adapter.MiniBarAdapter
-import com.demo.screen.songs.SongsViewModel
 import java.util.ArrayList
 
 class MiniBarFragment : BaseMVVMFragment<MiniBarViewModel>() {
     private lateinit var binding: FragmentMinibarBinding
     private lateinit var adapter: MiniBarAdapter
-    private var viewModel: SongsViewModel = SongsViewModel()
     private var songsList: List<Songs> = listOf()
     private var songPositon: Int = 0
 
     companion object {
         fun newInstance(
-            songList: List<Songs>,
-            songPosition: Int,
+            songsList: List<Songs>,
+            currentSongPosition: Int,
         ): MiniBarFragment {
             val fragment = MiniBarFragment()
             val args =
                 Bundle().apply {
-                    putParcelableArrayList("songs_list", ArrayList(songList))
-                    putInt("song_position", songPosition)
+                    putParcelableArrayList("songs_list", ArrayList(songsList))
+                    putInt("current_position", currentSongPosition)
                 }
             fragment.arguments = args
             return fragment
@@ -41,7 +39,7 @@ class MiniBarFragment : BaseMVVMFragment<MiniBarViewModel>() {
     ): View? {
         binding = FragmentMinibarBinding.inflate(inflater, container, false)
         arguments?.let {
-            songsList = it.getParcelableArrayList<Songs>("songs_list") ?: listOf()
+            songsList = it.getParcelableArrayList("songs_list") ?: listOf()
             songPositon = it.getInt("song_position")
         }
         return binding.root
