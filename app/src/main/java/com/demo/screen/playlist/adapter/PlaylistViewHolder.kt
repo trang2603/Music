@@ -20,7 +20,7 @@ class PlaylistViewHolder(
 
     fun bindData(playlist: Playlist) {
         binding.img.setImageResource(R.drawable.ic_launcher_foreground)
-        binding.artistName.text = playlist.songs.nameArtist
+        binding.artistName.text = playlist.songs.artist
         binding.date.text = playlist.date
         binding.time.text = playlist.time
     }

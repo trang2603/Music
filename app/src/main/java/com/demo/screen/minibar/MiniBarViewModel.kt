@@ -1,0 +1,33 @@
+package com.demo.screen.minibar
+
+import com.demo.base.BaseMVVMViewModel
+import com.demo.data.model.Songs
+
+class MiniBarViewModel :
+    BaseMVVMViewModel<MiniBarViewModel.State, MiniBarViewModel.Action, MiniBarViewModel.Mutation, MiniBarViewModel.Effect>() {
+    override var initialState: State = State()
+
+    override fun handleAction(
+        state: State,
+        action: Action,
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun handleMutation(
+        state: State,
+        mutation: Mutation,
+    ): State {
+        TODO("Not yet implemented")
+    }
+
+    sealed class Action : MVVMAction
+
+    sealed class Mutation : MVVMMutation
+
+    data class State(
+        val data: List<Songs>? = null,
+    ) : MVVMState
+
+    sealed class Effect : MVVMEffect
+}

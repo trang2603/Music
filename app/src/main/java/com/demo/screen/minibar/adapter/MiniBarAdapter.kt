@@ -1,0 +1,23 @@
+package com.demo.screen.minibar.adapter
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.demo.data.model.Songs
+import com.demo.screen.minibaritem.MiniBarItemFragment
+
+class MiniBarAdapter(
+    fragment: Fragment,
+    private val songsList: List<Songs>,
+) : FragmentStateAdapter(fragment) {
+    override fun getItemCount(): Int = songsList.size
+
+    override fun createFragment(position: Int): Fragment {
+        val miniBarItemFragment = MiniBarItemFragment()
+        miniBarItemFragment.arguments =
+            Bundle().apply {
+                putBundle("song_data", songsList[position] as Bundle)
+            }
+        return miniBarItemFragment
+    }
+}

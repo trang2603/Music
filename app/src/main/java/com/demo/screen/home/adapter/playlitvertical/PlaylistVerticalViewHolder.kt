@@ -20,8 +20,8 @@ class PlaylistVerticalViewHolder(
     }
 
     fun bindData(data: DataUi) {
-        binding.nameSong.text = (data.data as Playlist).songs.name
-        binding.nameArtist.text = (data.data as Playlist).songs.nameArtist
+        binding.nameSong.text = (data.data as Playlist).songs.songName
+        binding.nameArtist.text = (data.data as Playlist).songs.artist
         binding.namePlaylist.text = (data.data as Playlist).namePlaylist
     }
 }

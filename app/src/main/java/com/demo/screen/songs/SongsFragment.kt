@@ -13,6 +13,7 @@ import com.demo.base.BaseMVVMFragment
 import com.demo.databinding.FragmentSongsBinding
 import com.demo.databinding.LayoutPopupBinding
 import com.demo.screen.dialogaddplaylist.DialogAddPlaylistFragment
+import com.demo.screen.minibar.MiniBarFragment
 import com.demo.screen.songs.adapter.SongsAdapter
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
@@ -24,14 +25,17 @@ class SongsFragment : BaseMVVMFragment<SongsViewModel>() {
     private val adapter: SongsAdapter =
         SongsAdapter(onItemLongClick = { position, viewClick ->
             setupPopup(position, viewClick)
-        }, onItemPlayPauseClick = { songs ->
+        }, onItemPlayPauseClick = { song ->
             // TODO: update playpause of music -> update list
-            viewModelSongs.sendAction(SongsViewModel.Action.UpdateIconPlayPause(songs))
-        }, onItemHeartClick = { songs ->
+            viewModelSongs.sendAction(SongsViewModel.Action.UpdateIconPlayPause(song))
+            showMiniBar(songsList.indexOf(song))
+        }, onItemHeartClick = { song ->
             // TODO: update isFavourite of music -> update list
-            viewModelSongs.sendAction(SongsViewModel.Action.UpdateIconHeart(songs))
+            viewModelSongs.sendAction(SongsViewModel.Action.UpdateIconHeart(song))
         })
+
     private val viewModelSongs: SongsViewModel = SongsViewModel()
+    private var songsList = viewModelSongs.state.value.data
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,7 +55,16 @@ class SongsFragment : BaseMVVMFragment<SongsViewModel>() {
         binding.recycleView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.recycleView.adapter = adapter
+        viewModelSongs.setContentResolver(context?.contentResolver!!)
         viewModelSongs.sendAction(SongsViewModel.Action.GetList)
+    }
+
+    private fun showMiniBar(songPosition: Int) {
+        val miniBarFragment = MiniBarFragment.newInstance(songsList, songPosition)
+        childFragmentManager
+            .beginTransaction()
+            .replace(R.id.miniBar, miniBarFragment)
+            .commit()
     }
 
     private fun setupPopup(

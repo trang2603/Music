@@ -1,11 +1,17 @@
 package com.demo.screen.songs
 
+import android.content.ContentResolver
+import android.net.Uri
 import com.demo.base.BaseMVVMViewModel
 import com.demo.data.model.Songs
 
-class SongsViewModel :
-    BaseMVVMViewModel<SongsViewModel.State, SongsViewModel.Action, SongsViewModel.Mutation, SongsViewModel.Effect>() {
+class SongsViewModel : BaseMVVMViewModel<SongsViewModel.State, SongsViewModel.Action, SongsViewModel.Mutation, SongsViewModel.Effect>() {
     override var initialState: State = State()
+    private var contentResolver: ContentResolver? = null
+
+    fun setContentResolver(resolver: ContentResolver) {
+        this.contentResolver = resolver
+    }
 
     override fun handleAction(
         state: State,
@@ -39,20 +45,35 @@ class SongsViewModel :
             }
         }
 
-    private fun initData(): List<Songs> =
-        List(100) { i ->
-            Songs(
-                "$i",
-                "R.drawable.ic_launcher_foreground",
-                "Bai hat $i",
-                "Ca si $i",
-                "Mo ta bai hat $i",
-                "R.drawable.ic_heart",
-                "R.drawable.ic_play",
-            )
-        }
+    private fun initData(): List<Songs> {
+        val songList = mutableListOf<Songs>()
+        val uri = Uri.parse("content://com.music/songs")
+        val projection = arrayOf("songName", "artist", "imgSong")
+        val cursor = contentResolver?.query(uri, projection, null, null, null)
 
-    fun updateIconPlayPause(songs: Songs?): List<Songs> {
+        cursor?.use {
+            while (it.moveToNext()) {
+                val songName = it.getString(it.getColumnIndexOrThrow("songName"))
+                val artist = it.getString(it.getColumnIndexOrThrow("artist"))
+                val imgSong = it.getInt(it.getColumnIndexOrThrow("imgSong"))
+
+                songList.add(
+                    Songs(
+                        id = it.position.toString(),
+                        imgSong = imgSong,
+                        songName = songName,
+                        artist = artist,
+                        description = it.position.toString(),
+                        heart = it.position.toString(),
+                        playPause = it.position.toString(),
+                    ),
+                )
+            }
+        }
+        return songList
+    }
+
+    private fun updateIconPlayPause(songs: Songs?): List<Songs> {
         val list = state.value.data
         return list.map {
             it.copy(
@@ -66,7 +87,7 @@ class SongsViewModel :
         }
     }
 
-    fun updateIconHeart(songs: Songs?): List<Songs> {
+    private fun updateIconHeart(songs: Songs?): List<Songs> {
         val list = state.value.data
         return list.map {
             it.copy(

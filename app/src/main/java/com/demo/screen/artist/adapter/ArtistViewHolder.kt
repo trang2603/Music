@@ -20,6 +20,6 @@ class ArtistViewHolder(
 
     fun bindData(artist: Artist) {
         binding.img.setImageResource(R.drawable.ic_launcher_foreground)
-        binding.artistName.text = artist.songs.nameArtist
+        binding.artistName.text = artist.songs.artist
     }
 }

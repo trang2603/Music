@@ -1,5 +1,6 @@
 package com.demo.screen.home
 
+import com.demo.R
 import com.demo.base.BaseMVVMViewModel
 import com.demo.data.model.Add
 import com.demo.data.model.Artist
@@ -49,24 +50,23 @@ class HomeViewModel : BaseMVVMViewModel<HomeViewModel.State, HomeViewModel.Actio
                 type = Type.TYPE_RECENTLY,
                 data =
                     listOf(
-                        Songs("1", "", "Name song 1", "Name Artist 1", "", "", ""),
-                        Songs("2", "", "Name song 2", "Name Artist 2", "", "", ""),
-                        Songs("3", "", "Name song 3", "Name Artist 3", "", "", ""),
-                        Songs("4", "", "Name song 4", "Name Artist 4", "", "", ""),
-                        Songs("5", "", "Name song 5", "Name Artist 5", "", "", ""),
-                        Artist("1", "", Songs("1", "", "Name song 1", "Name Artist 1", "", "", "")),
-                        Artist("2", "", Songs("2", "", "Name song 2", "Name Artist 2", "", "", "")),
+                        Songs("1", R.drawable.img_song, "Name song 1", "Name Artist 1", "", "", ""),
+                        Songs("2", R.drawable.img_song, "Name song 2", "Name Artist 2", "", "", ""),
+                        Songs("3", R.drawable.img_song, "Name song 3", "Name Artist 3", "", "", ""),
+                        Songs("4", R.drawable.img_song, "Name song 4", "Name Artist 4", "", "", ""),
+                        Songs("5", R.drawable.img_song, "Name song 5", "Name Artist 5", "", "", ""),
+                        Artist("1", "", Songs("1", R.drawable.img_song, "Name song 1", "Name Artist 1", "", "", "")),
+                        Artist("2", "", Songs("2", R.drawable.img_song, "Name song 2", "Name Artist 2", "", "", "")),
                     ),
             ),
             DataUi(
                 type = Type.TYPE_FAVOURITE,
                 data =
                     listOf(
-                        Songs("1", "", "Name song 1", "Name Artist 1", "", "", ""),
-                        Songs("2", "", "Name song 2", "Name Artist 2", "", "", ""),
-                        Songs("3", "", "Name song 3", "Name Artist 3", "", "", ""),
-                        Songs("4", "", "Name song 4", "Name Artist 4", "", "", ""),
-                        Songs("5", "", "Name song 5", "Name Artist 5", "", "", ""),
+                        Songs("2", R.drawable.img_song, "Name song 2", "Name Artist 2", "", "", ""),
+                        Songs("3", R.drawable.img_song, "Name song 3", "Name Artist 3", "", "", ""),
+                        Songs("4", R.drawable.img_song, "Name song 4", "Name Artist 4", "", "", ""),
+                        Songs("5", R.drawable.img_song, "Name song 5", "Name Artist 5", "", "", ""),
                         Add("1", Songs()),
                     ),
             ),
@@ -79,7 +79,7 @@ class HomeViewModel : BaseMVVMViewModel<HomeViewModel.State, HomeViewModel.Actio
                         "Playlist 1",
                         "",
                         "",
-                        Songs("1", "", "Name song 1", "Name Artist 1", "", "", ""),
+                        Songs("1", R.drawable.img_song, "Name song 1", "Name Artist 1", "", "", ""),
                         "15 songs",
                     ),
             ),
@@ -92,7 +92,7 @@ class HomeViewModel : BaseMVVMViewModel<HomeViewModel.State, HomeViewModel.Actio
                         "Playlist 1",
                         "",
                         "",
-                        Songs("2", "", "Name song 2", "Name Artist 2", "", "", ""),
+                        Songs("2", R.drawable.img_song, "Name song 2", "Name Artist 2", "", "", ""),
                         "25 songs",
                     ),
             ),
@@ -105,7 +105,7 @@ class HomeViewModel : BaseMVVMViewModel<HomeViewModel.State, HomeViewModel.Actio
                         "Playlist 1",
                         "",
                         "",
-                        Songs("3", "", "Name song 3", "Name Artist 3", "", "", ""),
+                        Songs("3", R.drawable.img_song, "Name song 3", "Name Artist 3", "", "", ""),
                         "30 songs",
                     ),
             ),
@@ -118,7 +118,7 @@ class HomeViewModel : BaseMVVMViewModel<HomeViewModel.State, HomeViewModel.Actio
                         "Playlist 1",
                         "",
                         "",
-                        Songs("4", "", "Name song 4", "Name Artist 4", "", "", ""),
+                        Songs("4", R.drawable.img_song, "Name song 4", "Name Artist 4", "", "", ""),
                         "20 songs",
                     ),
             ),

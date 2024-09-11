@@ -2,9 +2,9 @@ package com.demo.data.model
 
 data class Songs(
     val id: String = "",
-    val imgSong: String = "",
-    val name: String = "",
-    val nameArtist: String = "",
+    val imgSong: Int = 0,
+    val songName: String = "",
+    val artist: String = "",
     val description: String = "",
     val heart: String = "",
     val playPause: String = "",

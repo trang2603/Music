@@ -14,7 +14,7 @@ class ItemSongViewHolder(
     fun bindData(song: Any) {
         if (song is Songs) {
             binding.img.setImageResource(R.drawable.img_song)
-            binding.name.text = song.name
+            binding.name.text = song.songName
         }
     }
 }

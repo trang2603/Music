@@ -36,9 +36,9 @@ class SongsViewHolder(
 
     fun bindData(music: Songs) {
         binding.apply {
-            img.setImageResource(R.drawable.ic_launcher_foreground)
-            name.text = music.name
-            nameArtist.text = music.nameArtist
+            img.setImageResource(music.imgSong)
+            name.text = music.songName
+            nameArtist.text = music.artist
             description.text = music.description
             playPause.setImageResource(if (music.isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
             heart.setImageResource(if (music.isFavourite) R.drawable.ic_heart_full else R.drawable.ic_heart)
