@@ -1,28 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="86dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="10dp"
-    android:background="#E2EBF6"
-    android:orientation="horizontal">
+    android:background="#E2EBF6">
 
+    <!-- ImageView cho ảnh -->
     <ImageView
         android:id="@+id/img"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
         android:background="@drawable/img_corner"
-        android:src="@drawable/ic_launcher_foreground" />
+        android:src="@drawable/ic_launcher_foreground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
+    <!-- LinearLayout chứa TextView -->
     <LinearLayout
-        android:layout_width="170dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="16dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/img"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/heart">
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/songName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/fredoka_medium"
@@ -57,24 +66,29 @@
                 android:textColor="#90A3B6" />
         </LinearLayout>
 
-
     </LinearLayout>
 
+    <!-- Icon trái tim (heart) -->
     <ImageView
         android:id="@+id/heart"
         android:layout_width="18dp"
         android:layout_height="18dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="50dp"
-        android:src="@drawable/ic_heart" />
+        android:src="@drawable/ic_heart"
+        app:layout_constraintStart_toEndOf="@+id/songName"
+        app:layout_constraintEnd_toStartOf="@+id/playPause"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="16dp" />
 
+    <!-- Icon play/pause -->
     <ImageView
         android:id="@+id/playPause"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="20dp"
-        android:src="@drawable/ic_play" />
+        android:src="@drawable/ic_play"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="16dp" />
 
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

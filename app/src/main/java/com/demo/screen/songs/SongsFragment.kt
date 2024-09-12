@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.demo.R
 import com.demo.base.BaseMVVMFragment
+import com.demo.data.model.Songs
 import com.demo.databinding.FragmentSongsBinding
 import com.demo.databinding.LayoutPopupBinding
 import com.demo.screen.dialogaddplaylist.DialogAddPlaylistFragment
@@ -28,14 +29,13 @@ class SongsFragment : BaseMVVMFragment<SongsViewModel>() {
         }, onItemPlayPauseClick = { song ->
             // TODO: update playpause of music -> update list
             viewModelSongs.sendAction(SongsViewModel.Action.UpdateIconPlayPause(song))
-            showMiniBar(songsList.indexOf(song))
+            showMiniBar(song?.id!!)
         }, onItemHeartClick = { song ->
             // TODO: update isFavourite of music -> update list
             viewModelSongs.sendAction(SongsViewModel.Action.UpdateIconHeart(song))
         })
 
     private val viewModelSongs: SongsViewModel = SongsViewModel()
-    private var songsList = viewModelSongs.state.value.data
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,12 +59,15 @@ class SongsFragment : BaseMVVMFragment<SongsViewModel>() {
         viewModelSongs.sendAction(SongsViewModel.Action.GetList)
     }
 
-    private fun showMiniBar(songPosition: Int) {
-        val miniBarFragment = MiniBarFragment.newInstance(songsList, songPosition)
-        childFragmentManager
-            .beginTransaction()
-            .replace(R.id.miniBar, miniBarFragment)
-            .commit()
+    private fun showMiniBar(songId: String) {
+        viewModelSongs.state.map { it.data }.distinctUntilChanged().onEach { songList ->
+            val miniBarFragment = MiniBarFragment.newInstance(songList, songId.toInt()-1)
+            childFragmentManager
+                .beginTransaction()
+                .replace(R.id.miniBar, miniBarFragment)
+                .commit()
+        }.launchIn(lifecycleScope)
+
     }
 
     private fun setupPopup(

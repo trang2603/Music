@@ -37,7 +37,7 @@ class SongsViewHolder(
     fun bindData(music: Songs) {
         binding.apply {
             img.setImageResource(music.imgSong)
-            name.text = music.songName
+            songName.text = music.songName
             nameArtist.text = music.artist
             description.text = music.description
             playPause.setImageResource(if (music.isPlaying) R.drawable.ic_pause else R.drawable.ic_play)

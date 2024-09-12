@@ -16,7 +16,7 @@ class MiniBarAdapter(
         val miniBarItemFragment = MiniBarItemFragment()
         miniBarItemFragment.arguments =
             Bundle().apply {
-                putBundle("song_data", songsList[position] as Bundle)
+                putSerializable("song_data", songsList[position])
             }
         return miniBarItemFragment
     }
