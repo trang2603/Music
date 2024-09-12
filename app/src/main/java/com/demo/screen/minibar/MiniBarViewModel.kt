@@ -11,7 +11,10 @@ class MiniBarViewModel :
         state: State,
         action: Action,
     ) {
-        TODO("Not yet implemented")
+        when (action) {
+            is Action.UpdateIconPlayPause -> {
+            }
+        }
     }
 
     override fun handleMutation(
@@ -21,7 +24,9 @@ class MiniBarViewModel :
         TODO("Not yet implemented")
     }
 
-    sealed class Action : MVVMAction
+    sealed class Action : MVVMAction {
+        data object UpdateIconPlayPause : Action()
+    }
 
     sealed class Mutation : MVVMMutation
 

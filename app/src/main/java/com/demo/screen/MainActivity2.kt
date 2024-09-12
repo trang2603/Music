@@ -51,5 +51,6 @@ class MainActivity2 : AppCompatActivity() {
 
     private fun setupViewPager() {
         binding.viewPager.adapter = MainAdapter(this, listFragment)
+        binding.viewPager.isUserInputEnabled = false
     }
 }

@@ -39,6 +39,7 @@ class MusicFragment : Fragment() {
     private fun setupViewPager() {
         adapter = MusicAdapter(this, listFragment)
         binding.viewPager.adapter = adapter
+        binding.viewPager.isUserInputEnabled = false
     }
 
     private fun setupTabLayout() {

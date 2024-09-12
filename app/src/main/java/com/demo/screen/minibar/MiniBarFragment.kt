@@ -1,28 +1,22 @@
 package com.demo.screen.minibar
 
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
 import com.demo.base.BaseMVVMFragment
 import com.demo.data.model.Songs
 import com.demo.databinding.FragmentMinibarBinding
 import com.demo.screen.minibar.adapter.MiniBarAdapter
 import com.demo.screen.songs.SongsViewModel
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlin.collections.ArrayList
 
 class MiniBarFragment : BaseMVVMFragment<MiniBarViewModel>() {
     private lateinit var binding: FragmentMinibarBinding
     private lateinit var adapter: MiniBarAdapter
-    private var viewModel: SongsViewModel = SongsViewModel()
     private var currentSongPosition: Int = 0
-    private var songsList = viewModel.state.map { it.data }.distinctUntilChanged().onEach { it }.launchIn(lifecycleScope)
+    private var songsList: List<Songs> = listOf()
+    private var viewModel: SongsViewModel = SongsViewModel()
 
     companion object {
         fun newInstance(
@@ -47,8 +41,8 @@ class MiniBarFragment : BaseMVVMFragment<MiniBarViewModel>() {
     ): View? {
         binding = FragmentMinibarBinding.inflate(inflater, container, false)
         arguments?.let {
-                songsList = it.getSerializable("songs_list") as ArrayList<Songs>
-                currentSongPosition = it.getInt("song_position")
+            songsList = it.getSerializable("songs_list") as ArrayList<Songs>
+            currentSongPosition = it.getInt("current_position")
         }
         return binding.root
     }
@@ -58,7 +52,7 @@ class MiniBarFragment : BaseMVVMFragment<MiniBarViewModel>() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MiniBarAdapter(this, songsList)
+        adapter = MiniBarAdapter(this, songsList, currentSongPosition)
         binding.viewPager.adapter = adapter
         binding.viewPager.setCurrentItem(currentSongPosition, false)
     }

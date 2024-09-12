@@ -9,6 +9,7 @@ import com.demo.screen.minibaritem.MiniBarItemFragment
 class MiniBarAdapter(
     fragment: Fragment,
     private val songsList: List<Songs>,
+    private val currentSongPosition: Int,
 ) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = songsList.size
 

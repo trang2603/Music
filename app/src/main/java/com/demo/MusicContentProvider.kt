@@ -76,6 +76,72 @@ class MusicContentProvider : ContentProvider() {
                     false,
                     false,
                 ),
+                Songs(
+                    "5",
+                    R.drawable.img_song,
+                    "Shape of you",
+                    "Ed Sheeran",
+                    "hh",
+                    "R.drawable.ic_heart",
+                    "R.drawable.ic_play",
+                    false,
+                    false,
+                ),
+                Songs(
+                    "5",
+                    R.drawable.img_song,
+                    "Shape of you",
+                    "Ed Sheeran",
+                    "hh",
+                    "R.drawable.ic_heart",
+                    "R.drawable.ic_play",
+                    false,
+                    false,
+                ),
+                Songs(
+                    "5",
+                    R.drawable.img_song,
+                    "Shape of you",
+                    "Ed Sheeran",
+                    "hh",
+                    "R.drawable.ic_heart",
+                    "R.drawable.ic_play",
+                    false,
+                    false,
+                ),
+                Songs(
+                    "5",
+                    R.drawable.img_song,
+                    "Shape of you",
+                    "Ed Sheeran",
+                    "hh",
+                    "R.drawable.ic_heart",
+                    "R.drawable.ic_play",
+                    false,
+                    false,
+                ),
+                Songs(
+                    "5",
+                    R.drawable.img_song,
+                    "Shape of you",
+                    "Ed Sheeran",
+                    "hh",
+                    "R.drawable.ic_heart",
+                    "R.drawable.ic_play",
+                    false,
+                    false,
+                ),
+                Songs(
+                    "5",
+                    R.drawable.img_song,
+                    "Shape of you",
+                    "Ed Sheeran",
+                    "hh",
+                    "R.drawable.ic_heart",
+                    "R.drawable.ic_play",
+                    false,
+                    false,
+                ),
             )
     }
 
@@ -113,6 +179,7 @@ class MusicContentProvider : ContentProvider() {
                 }
                 matrixCursor
             }
+
             else -> null
         }
 
