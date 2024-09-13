@@ -11,5 +11,6 @@ class HeaderDeatilSongViewHolder(
     }
 
     fun bindData(song: Songs) {
+        binding.songName.text = song.songName
     }
 }
