@@ -1,6 +1,5 @@
 package com.demo.data.model
 
-import android.os.Bundle
 import java.io.Serializable
 
 data class Songs(
@@ -13,4 +12,4 @@ data class Songs(
     val playPause: String = "",
     val isPlaying: Boolean = false,
     val isFavourite: Boolean = false,
-): Serializable
+) : Serializable
