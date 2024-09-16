@@ -27,7 +27,6 @@ class MiniBarItemFragment : BaseMVVMFragment<MiniBarItemViewModel>() {
         binding = LayoutMiniItemBarBinding.inflate(inflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -73,4 +72,5 @@ class MiniBarItemFragment : BaseMVVMFragment<MiniBarItemViewModel>() {
 
     override fun observerEffect() {
     }
+
 }

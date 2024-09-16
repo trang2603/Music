@@ -45,6 +45,7 @@ class SongsFragment : BaseMVVMFragment<SongsViewModel>() {
         return binding.root
     }
 
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(
         view: View,

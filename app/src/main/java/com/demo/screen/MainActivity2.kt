@@ -1,6 +1,7 @@
 package com.demo.screen
 
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.demo.R
 import com.demo.databinding.ActivityMainBinding
@@ -12,7 +13,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity2 : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
+    private var longClick: Long = 500
+    private var eventDown: Long = 0
     val listFragment =
         listOf(
             HomeFragment(),
@@ -29,6 +31,36 @@ class MainActivity2 : AppCompatActivity() {
         setupViewPager()
         setupTabLayout()
     }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        event ?: return false
+        when(event?.action) {
+            MotionEvent.ACTION_DOWN -> {
+                eventDown = System.currentTimeMillis()
+            }
+            MotionEvent.ACTION_UP -> {
+                val eventUp = System.currentTimeMillis()
+                val distanceTime = eventUp - eventDown
+                if(distanceTime < longClick) {
+                    onClick()
+                }
+                else {
+                    onLongClick()
+                }
+            }
+        }
+        return true
+
+    }
+
+    private fun onLongClick() {
+
+    }
+
+    private fun onClick() {
+        
+    }
+
 
     private fun setupTabLayout() {
         TabLayoutMediator(binding.tablayout, binding.viewPager) { tab, position ->
