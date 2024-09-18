@@ -33,7 +33,7 @@ class DetailSongFragment : BaseMVVMFragment<DetailSongViewModel>() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.sendAction(DetailSongViewModel.Action.GetList)
+        viewModel.sendAction(DetailSongViewModel.Action.ShuffeSong())
         binding.recycleView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.recycleView.adapter = adapter

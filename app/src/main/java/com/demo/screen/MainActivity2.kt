@@ -10,11 +10,17 @@ import com.demo.screen.home.HomeFragment
 import com.demo.screen.music.MusicFragment
 import com.demo.screen.setting.SettingFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlin.math.sqrt
 
 class MainActivity2 : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var longClick: Long = 500
     private var eventDown: Long = 0
+    private var firstTouchX: Float = -1f
+    private var firstTouchY: Float = -1f
+    private var secondTouchX: Float = -1f
+    private var secondTouchY: Float = -1f
+
     val listFragment =
         listOf(
             HomeFragment(),
@@ -34,8 +40,9 @@ class MainActivity2 : AppCompatActivity() {
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
-        when(event?.action) {
-            MotionEvent.ACTION_DOWN -> {
+
+        when (event?.action) {
+            /*MotionEvent.ACTION_DOWN -> {
                 eventDown = System.currentTimeMillis()
             }
             MotionEvent.ACTION_UP -> {
@@ -47,20 +54,42 @@ class MainActivity2 : AppCompatActivity() {
                 else {
                     onLongClick()
                 }
+            }*/
+
+            MotionEvent.ACTION_DOWN -> {
+                if (firstTouchX == -1f && firstTouchY == -1f) {
+                    firstTouchX = event.x
+                    firstTouchY = event.y
+                } else {
+                    secondTouchX = event.x
+                    secondTouchY = event.y
+                    val distance = calculator(firstTouchX, firstTouchY, secondTouchX, secondTouchY)
+                    println("Khoang thoi gian cham cuar 2 lan click la: $distance")
+
+                    firstTouchX = secondTouchX
+                    firstTouchY = secondTouchY
+                }
             }
         }
         return true
+    }
 
+    private fun calculator(
+        firstTouchX: Float,
+        firstTouchY: Float,
+        secondTouchX: Float,
+        secondTouchY: Float,
+    ): Float {
+        var dX = firstTouchX - secondTouchX
+        var dY = firstTouchY - secondTouchY
+        return sqrt(dX * dX - dY * dY)
     }
 
     private fun onLongClick() {
-
     }
 
     private fun onClick() {
-        
     }
-
 
     private fun setupTabLayout() {
         TabLayoutMediator(binding.tablayout, binding.viewPager) { tab, position ->
