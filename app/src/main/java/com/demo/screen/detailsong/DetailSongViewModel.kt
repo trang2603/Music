@@ -35,9 +35,12 @@ class DetailSongViewModel :
 
             is Action.PlayPauseSong -> {
                 val songList = state.songList
+                /*val songCurrent = songList?.firstOrNull { it.id == state.songCurrent?.id }
+                val songNewCurrent = songCurrent?.copy(isPlaying = !songCurrent.isPlaying)*/
                 val updateList =
                     songList?.map { song ->
                         if (song.id == state.songCurrent?.id) {
+//                        state.songCurrent.copy(isPlaying = !state.songCurrent.isPlaying)
                             song.copy(isPlaying = !state.songCurrent.isPlaying)
                         } else {
                             song
@@ -48,9 +51,9 @@ class DetailSongViewModel :
 
             is Action.PreSong -> {
                 val songList = initSong()
-                val songCurrent = songList?.firstOrNull { it.id == state.songCurrent?.id }
-                val songNewCurrent = songList.get(songCurrent?.id.hashCode() - 1)
-                sendMutation(Mutation.UpdateSongPosition(songCurrent = songNewCurrent))
+                val current = songList.indexOfFirst { it.id == state.songCurrent?.id }
+                val newCurrent = songList.getOrNull(current - 1) ?: return
+                sendMutation(Mutation.UpdateSongPosition(songCurrent = newCurrent))
             }
 
             is Action.NextSong -> {
@@ -176,7 +179,7 @@ class DetailSongViewModel :
         ) : Mutation()
 
         data class UpdateSongPosition(
-            val songCurrent: Songs?,
+            val songCurrent: Songs,
         ) : Mutation()
 
         data class UpdateList(
