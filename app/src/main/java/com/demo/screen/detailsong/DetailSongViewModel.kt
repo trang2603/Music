@@ -3,6 +3,7 @@ package com.demo.screen.detailsong
 import android.content.ContentResolver
 import android.net.Uri
 import com.demo.base.BaseMVVMViewModel
+import com.demo.data.model.LyricSong
 import com.demo.data.model.SongSetting
 import com.demo.data.model.Songs
 import com.demo.data.modelui.DataDetailUi
@@ -35,12 +36,9 @@ class DetailSongViewModel :
 
             is Action.PlayPauseSong -> {
                 val songList = state.songList
-                /*val songCurrent = songList?.firstOrNull { it.id == state.songCurrent?.id }
-                val songNewCurrent = songCurrent?.copy(isPlaying = !songCurrent.isPlaying)*/
                 val updateList =
                     songList?.map { song ->
                         if (song.id == state.songCurrent?.id) {
-//                        state.songCurrent.copy(isPlaying = !state.songCurrent.isPlaying)
                             song.copy(isPlaying = !state.songCurrent.isPlaying)
                         } else {
                             song
@@ -52,35 +50,51 @@ class DetailSongViewModel :
             is Action.PreSong -> {
                 val songList = initSong()
                 val current = songList.indexOfFirst { it.id == state.songCurrent?.id }
-                val newCurrent = songList.getOrNull(current - 1) ?: return
-                sendMutation(Mutation.UpdateSongPosition(songCurrent = newCurrent))
+                val songNewCurrent = songList.getOrNull(current - 1) ?: return
+                sendMutation(Mutation.UpdateSongPosition(songCurrent = songNewCurrent))
             }
 
             is Action.NextSong -> {
                 val songList = initSong()
-                val songCurrent = songList?.firstOrNull { it.id == state.songCurrent?.id }
-                val songNewCurrent = songList.get(songCurrent?.id.hashCode() + 1)
+                val current = songList.indexOfFirst { it.id == state.songCurrent?.id }
+                val songNewCurrent = songList.getOrNull(current + 1) ?: return
                 sendMutation(Mutation.UpdateSongPosition(songCurrent = songNewCurrent))
             }
 
             is Action.AddFavouriteSong -> {
                 val songList = state.songList
-                val songCurrent = songList?.firstOrNull { it.id == state.songCurrent?.id }
-                val songNewCurrent = songCurrent?.copy(isPlaying = !songCurrent.isFavourite)
-                val updateList = state.copy(songCurrent = songNewCurrent).songList
-                sendMutation(Mutation.UpdateList(songList = updateList!!))
+                val updateList = songList?.map { song ->
+                    if(song.id == state.songCurrent?.id) {
+                        song.copy(isFavourite = !state.songCurrent.isFavourite)
+                    }
+                    else {
+                        song
+                    }
+                }
+                sendMutation(Mutation.UpdateList(updateList!!))
             }
 
             is Action.TimerListenMusic -> {
+                val timer = action.timerListenMusic
+                sendMutation(Mutation.UpdateTime(timer))
             }
 
             is Action.Device -> {
+                val songCurrent = state.songCurrent
+                sendMutation(Mutation.UpdateSongPosition(songCurrent))
             }
 
             is Action.ShareSong -> {
+                val songCurrent = state.songCurrent
+                sendMutation(Mutation.UpdateSongPosition(songCurrent))
             }
 
             is Action.LyricsSong -> {
+                val songCurrent = state.songCurrent
+                if(songCurrent?.id == state.songLyric?.songs?.id) {
+                    val songLyric = state.songLyric
+                    sendMutation(Mutation.UpdateLyricSong(songLyric!!))
+                }
             }
         }
     }
@@ -93,7 +107,7 @@ class DetailSongViewModel :
             is Mutation.InitData -> {
                 state.copy(songList = mutation.songList, songCurrent = mutation.songCurrent)
             }
-            is Mutation.UpdateSongIcon -> {
+            is Mutation.UpdateSongPosition -> {
                 state.copy(songCurrent = mutation.songIcon)
             }
         }
@@ -174,23 +188,26 @@ class DetailSongViewModel :
             val songCurrent: Songs?,
         ) : Mutation()
 
-        data class UpdateSong(
-            val song: Songs?,
+        data class UpdateTime(
+            val timer: Int,
         ) : Mutation()
 
         data class UpdateSongPosition(
-            val songCurrent: Songs,
+            val songCurrent: Songs?,
         ) : Mutation()
 
         data class UpdateList(
             val songList: List<Songs>,
         ) : Mutation()
+
+        data class UpdateLyricSong(val lyricSong: LyricSong) : Mutation()
     }
 
     data class State(
         val data: List<DataDetailUi>? = null,
         val songList: List<Songs>? = null,
         val songCurrent: Songs? = null,
+        val songLyric: LyricSong? = null,
         val songSetting: SongSetting? = null,
     ) : BaseMVVMViewModel.MVVMState
 
