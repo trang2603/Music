@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.demo.data.model.Songs
 import com.demo.data.modelui.DataDetailUi
 import com.demo.data.modelui.TypeDetail
 import com.demo.databinding.ItemArtistDetailsongBinding
@@ -12,7 +13,20 @@ import com.demo.databinding.ItemDetailSongBinding
 import com.demo.databinding.ItemHeaderDetailsongBinding
 import com.demo.databinding.ItemLyricDetailsongBinding
 
-class DetailSongAdapter : ListAdapter<DataDetailUi, RecyclerView.ViewHolder>(DetailSongDiffCallback()) {
+class DetailSongAdapter(
+    val preOnClick: (DataDetailUi) -> Unit,
+    val nextOnClick: (DataDetailUi) -> Unit,
+    val playPauseOnClick: (DataDetailUi) -> Unit,
+    val shuffleOnClick: (DataDetailUi) -> Unit,
+    val addFavouriteOcClick: (DataDetailUi) -> Unit,
+    val deviceOnClick: (DataDetailUi) -> Unit,
+    val shareOnClick: (DataDetailUi) -> Unit,
+) : ListAdapter<DataDetailUi, RecyclerView.ViewHolder>(DetailSongDiffCallback()) {
+    companion object {
+        val UPDATE_STATUS_PLAYPAUSE = "UPDATE_STATUS_PLAYPAUSE"
+        val UPDATE_STATUS_FAVOURITE = "UPDATE_STATUS_FAVOURITE"
+    }
+
     override fun getItemViewType(position: Int): Int {
         val item: DataDetailUi = getItem(position)
         val itemType = item.type.hashCode()
@@ -41,7 +55,20 @@ class DetailSongAdapter : ListAdapter<DataDetailUi, RecyclerView.ViewHolder>(Det
                         parent,
                         false,
                     )
-                return DetailSongViewHolder(binding)
+                return DetailSongViewHolder(
+                    binding,
+                    preOnClick = { preOnClick.invoke(getItem(it)) },
+                    nextOnClick = { nextOnClick.invoke(getItem(it)) },
+                    playPauseOnClick = { playPauseOnClick.invoke(getItem(it)) },
+                    shuffleOnClick = { shuffleOnClick.invoke(getItem(it)) },
+                    addFavouriteOcClick = { addFavouriteOcClick.invoke(getItem(it)) },
+                    deviceOnClick = {
+                        deviceOnClick.invoke(getItem(it))
+                    },
+                    shareOnClick = {
+                        shareOnClick.invoke(getItem(it))
+                    },
+                )
             }
 
             TypeDetail.TYPE_LYRIC.hashCode() -> {
@@ -81,16 +108,56 @@ class DetailSongAdapter : ListAdapter<DataDetailUi, RecyclerView.ViewHolder>(Det
             holder.bindData(item)
         }
     }
+
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+        payloads: MutableList<Any>,
+    ) {
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position)
+        } else {
+            val item = getItem(position)
+            if (holder is DetailSongViewHolder) {
+                holder.bindData(payloads, item)
+            }
+        }
+    }
 }
 
 class DetailSongDiffCallback : ItemCallback<DataDetailUi>() {
     override fun areItemsTheSame(
         oldItem: DataDetailUi,
         newItem: DataDetailUi,
-    ): Boolean = oldItem.data == newItem.data
+    ): Boolean {
+        if (oldItem.data is Songs && newItem.data is Songs) {
+            return oldItem.id == newItem.id
+        } else {
+            return oldItem.id == newItem.id
+        }
+    }
 
     override fun areContentsTheSame(
         oldItem: DataDetailUi,
         newItem: DataDetailUi,
-    ): Boolean = areContentsTheSame(oldItem, newItem)
+    ): Boolean {
+        if (oldItem.data is Songs && newItem.data is Songs) {
+            return oldItem.data.isPlaying == newItem.data.isPlaying && oldItem.data.isFavourite == newItem.data.isFavourite
+        } else {
+            return areItemsTheSame(oldItem, newItem)
+        }
+    }
+
+    override fun getChangePayload(
+        oldItem: DataDetailUi,
+        newItem: DataDetailUi,
+    ): Any? =
+        if (oldItem.data is Songs && newItem.data is Songs) {
+            if (oldItem.data.isPlaying != newItem.data.isPlaying) {
+                DetailSongAdapter.UPDATE_STATUS_PLAYPAUSE
+            } else {
+                DetailSongAdapter.UPDATE_STATUS_FAVOURITE
+            }
+        } else {
+        }
 }

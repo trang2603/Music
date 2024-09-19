@@ -16,7 +16,30 @@ import kotlinx.coroutines.flow.onEach
 
 class DetailSongFragment : BaseMVVMFragment<DetailSongViewModel>() {
     private lateinit var binding: FragmentDetailSongBinding
-    private val adapter: DetailSongAdapter = DetailSongAdapter()
+    private val adapter: DetailSongAdapter =
+        DetailSongAdapter(
+            preOnClick = { song ->
+                viewModel.sendAction(DetailSongViewModel.Action.PreSong)
+            },
+            nextOnClick = {
+                viewModel.sendAction(DetailSongViewModel.Action.NextSong)
+            },
+            playPauseOnClick = {
+                viewModel.sendAction(DetailSongViewModel.Action.PlayPauseSong)
+            },
+            shuffleOnClick = {
+                viewModel.sendAction(DetailSongViewModel.Action.ShuffeSong)
+            },
+            addFavouriteOcClick = {
+                viewModel.sendAction(DetailSongViewModel.Action.AddFavouriteSong)
+            },
+            deviceOnClick = {
+                viewModel.sendAction(DetailSongViewModel.Action.Device)
+            },
+            shareOnClick = {
+                viewModel.sendAction(DetailSongViewModel.Action.ShareSong)
+            },
+        )
     private var viewModel: DetailSongViewModel = DetailSongViewModel()
 
     override fun onCreateView(
@@ -33,18 +56,24 @@ class DetailSongFragment : BaseMVVMFragment<DetailSongViewModel>() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.sendAction(DetailSongViewModel.Action.ShuffeSong())
         binding.recycleView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.recycleView.adapter = adapter
+        viewModel.setContentResolver(context?.contentResolver!!)
+        viewModel.sendAction(DetailSongViewModel.Action.InitData)
     }
 
     override fun observerState() {
         viewModel.state
-            .map { it.data }
-            .distinctUntilChanged()
-            .onEach {
-                adapter.submitList(it?.toList())
+            .map { state ->
+                state.data
+//                state.data
+            }.distinctUntilChanged()
+            .onEach { song ->
+                song?.let {
+//                    adapter.submitList(listOf(DataDetailUi(TypeDetail.TYPE_SONG, it, id = song.id)))
+                    adapter.submitList(it)
+                }
             }.launchIn(lifecycleScope)
     }
 

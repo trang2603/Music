@@ -77,7 +77,7 @@ class MusicContentProvider : ContentProvider() {
                     false,
                 ),
                 Songs(
-                    "5",
+                    "6",
                     R.drawable.img_song,
                     "Shape of you",
                     "Ed Sheeran",
@@ -88,7 +88,7 @@ class MusicContentProvider : ContentProvider() {
                     false,
                 ),
                 Songs(
-                    "5",
+                    "7",
                     R.drawable.img_song,
                     "Shape of you",
                     "Ed Sheeran",
@@ -99,7 +99,7 @@ class MusicContentProvider : ContentProvider() {
                     false,
                 ),
                 Songs(
-                    "5",
+                    "8",
                     R.drawable.img_song,
                     "Shape of you",
                     "Ed Sheeran",
@@ -110,7 +110,7 @@ class MusicContentProvider : ContentProvider() {
                     false,
                 ),
                 Songs(
-                    "5",
+                    "9",
                     R.drawable.img_song,
                     "Shape of you",
                     "Ed Sheeran",
@@ -121,7 +121,7 @@ class MusicContentProvider : ContentProvider() {
                     false,
                 ),
                 Songs(
-                    "5",
+                    "10",
                     R.drawable.img_song,
                     "Shape of you",
                     "Ed Sheeran",
@@ -132,7 +132,7 @@ class MusicContentProvider : ContentProvider() {
                     false,
                 ),
                 Songs(
-                    "5",
+                    "11",
                     R.drawable.img_song,
                     "Shape of you",
                     "Ed Sheeran",

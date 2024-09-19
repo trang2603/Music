@@ -1,8 +1,9 @@
 package com.demo.data.modelui
 
-class DataDetailUi(
-    val type: TypeDetail,
-    val data: Any,
+data class DataDetailUi(
+    val type: TypeDetail? = null,
+    val data: Any? = null,
+    val id: String? = null,
 )
 
 enum class TypeDetail {

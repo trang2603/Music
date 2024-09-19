@@ -27,6 +27,7 @@ class MiniBarItemFragment : BaseMVVMFragment<MiniBarItemViewModel>() {
         binding = LayoutMiniItemBarBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -48,14 +49,14 @@ class MiniBarItemFragment : BaseMVVMFragment<MiniBarItemViewModel>() {
             viewModel.sendAction(MiniBarItemViewModel.Action.UpdateIconPlayPause(song))
         }
         binding.layoutMiniItemBar.setOnClickListener {
-            showFragmentDetailSong(song)
+            showFragmentDetailSong()
         }
     }
 
-    private fun showFragmentDetailSong(song: Songs) {
+    private fun showFragmentDetailSong() {
         val detailSongFragment = DetailSongFragment()
-        val bundle = Bundle()
-        detailSongFragment.arguments = bundle
+        /*val bundle = Bundle()
+        detailSongFragment.arguments = bundle*/
         requireActivity().supportFragmentManager.beginTransaction().apply {
             add(requireActivity().findViewById<View>(R.id.container).id, detailSongFragment)
             addToBackStack(SongsFragment::class.simpleName)
@@ -72,5 +73,4 @@ class MiniBarItemFragment : BaseMVVMFragment<MiniBarItemViewModel>() {
 
     override fun observerEffect() {
     }
-
 }
