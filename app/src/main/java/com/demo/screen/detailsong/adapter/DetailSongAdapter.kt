@@ -25,6 +25,7 @@ class DetailSongAdapter(
     companion object {
         val UPDATE_STATUS_PLAYPAUSE = "UPDATE_STATUS_PLAYPAUSE"
         val UPDATE_STATUS_FAVOURITE = "UPDATE_STATUS_FAVOURITE"
+        val UPDATE_SONG = "UPDATE_SONG"
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -142,7 +143,9 @@ class DetailSongDiffCallback : ItemCallback<DataDetailUi>() {
         newItem: DataDetailUi,
     ): Boolean {
         if (oldItem.data is Songs && newItem.data is Songs) {
-            return oldItem.data.isPlaying == newItem.data.isPlaying && oldItem.data.isFavourite == newItem.data.isFavourite
+            return oldItem.data.isPlaying == newItem.data.isPlaying &&
+                oldItem.data.isFavourite == newItem.data.isFavourite &&
+                oldItem.data.id == newItem.data.id
         } else {
             return areItemsTheSame(oldItem, newItem)
         }
@@ -155,8 +158,9 @@ class DetailSongDiffCallback : ItemCallback<DataDetailUi>() {
         if (oldItem.data is Songs && newItem.data is Songs) {
             if (oldItem.data.isPlaying != newItem.data.isPlaying) {
                 DetailSongAdapter.UPDATE_STATUS_PLAYPAUSE
-            } else {
+            } else if (oldItem.data.isFavourite != newItem.data.isFavourite) {
                 DetailSongAdapter.UPDATE_STATUS_FAVOURITE
+            } else {
             }
         } else {
         }

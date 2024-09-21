@@ -73,15 +73,31 @@ class DetailSongViewModel :
             is Action.PreSong -> {
                 val songList = state.songList
                 val current = songList?.indexOfFirst { it.id == state.songCurrent?.id }
-                val songNewCurrent = songList?.getOrNull(current!!.minus(1)) ?: return
-                sendMutation(Mutation.UpdateSongPosition(songCurrent = songNewCurrent))
+                val songCurrent = songList?.getOrNull(current!!.minus(1)) ?: return
+                val newDataList =
+                    state.data?.map { data ->
+                        if (data.type == TypeDetail.TYPE_SONG) {
+                            data.copy(data = songCurrent)
+                        } else {
+                            data
+                        }
+                    }
+                sendMutation(Mutation.UpdateSongPosition(songCurrent = songCurrent, dataDetailList = newDataList ?: listOf()))
             }
 
             is Action.NextSong -> {
                 val songList = state.songList
                 val current = songList?.indexOfFirst { it.id == state.songCurrent?.id }
-                val songNewCurrent = songList?.getOrNull(current!!.plus(1)) ?: return
-                sendMutation(Mutation.UpdateSongPosition(songCurrent = songNewCurrent))
+                val songCurrent = songList?.getOrNull(current!!.plus(1)) ?: return
+                val newDataList =
+                    state.data?.map { data ->
+                        if (data.type == TypeDetail.TYPE_SONG) {
+                            data.copy(data = songCurrent)
+                        } else {
+                            data
+                        }
+                    }
+                sendMutation(Mutation.UpdateSongPosition(songCurrent = songCurrent, dataDetailList = newDataList ?: listOf()))
             }
 
             is Action.AddFavouriteSong -> {
@@ -106,7 +122,13 @@ class DetailSongViewModel :
                             data
                         }
                     }
-                sendMutation(Mutation.UpdateList(updateList ?: listOf(), dataDetailList = newDataList ?: listOf()))
+                sendMutation(
+                    Mutation.UpdateDetailData(
+                        songList = updateList ?: listOf(),
+                        dataDetailList = newDataList ?: listOf(),
+                        songCurrent = songCurrent,
+                    ),
+                )
             }
 
             is Action.TimerListenMusic -> {
@@ -116,12 +138,12 @@ class DetailSongViewModel :
 
             is Action.Device -> {
                 val songCurrent = state.songCurrent
-                sendMutation(Mutation.UpdateSongPosition(songCurrent))
+                // sendMutation(Mutation.UpdateSongPosition(songCurrent))
             }
 
             is Action.ShareSong -> {
                 val songCurrent = state.songCurrent
-                sendMutation(Mutation.UpdateSongPosition(songCurrent))
+                // sendMutation(Mutation.UpdateSongPosition(songCurrent))
             }
 
             is Action.LyricsSong -> {
@@ -143,7 +165,7 @@ class DetailSongViewModel :
                 state.copy(songList = mutation.songList, songCurrent = mutation.songCurrent)
             }
             is Mutation.UpdateSongPosition -> {
-                state.copy(songCurrent = mutation.songCurrent)
+                state.copy(songCurrent = mutation.songCurrent, data = mutation.dataDetailList)
             }
             is Mutation.UpdateList -> {
                 state.copy(songList = mutation.songList, data = mutation.dataDetailList)
@@ -179,13 +201,8 @@ class DetailSongViewModel :
                 data = songs,
             ),
         )
-        /*val songList = initSong()
 
-        songList.forEach { song ->
-
-        }*/
-
-        /*// Add static lyric data
+        /* Add static lyric data
         dataList.add(
             DataDetailUi(
                 type = TypeDetail.TYPE_LYRIC,
@@ -272,6 +289,7 @@ class DetailSongViewModel :
 
         data class UpdateSongPosition(
             val songCurrent: Songs?,
+            val dataDetailList: List<DataDetailUi>,
         ) : Mutation()
 
         data class UpdateList(

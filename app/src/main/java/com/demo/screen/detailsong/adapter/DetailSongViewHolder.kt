@@ -76,6 +76,10 @@ class DetailSongViewHolder(
                             if (song.isFavourite) R.drawable.ic_add_favourite else R.drawable.ic_add_favourite_circle,
                         )
                     }
+
+                    DetailSongAdapter.UPDATE_SONG -> {
+                        binding.
+                    }
                 }
             }
         }
