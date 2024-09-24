@@ -28,11 +28,11 @@ class DetailSongAdapter(
         val UPDATE_SONG = "UPDATE_SONG"
     }
 
-    override fun getItemViewType(position: Int): Int {
+    /*override fun getItemViewType(position: Int): Int {
         val item: DataDetailUi = getItem(position)
         val itemType = item.type.hashCode()
         return itemType
-    }
+    }*/
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -110,7 +110,7 @@ class DetailSongAdapter(
         }
     }
 
-    override fun onBindViewHolder(
+    /*override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
         position: Int,
         payloads: MutableList<Any>,
@@ -123,7 +123,7 @@ class DetailSongAdapter(
                 holder.bindData(payloads, item)
             }
         }
-    }
+    }*/
 }
 
 class DetailSongDiffCallback : ItemCallback<DataDetailUi>() {

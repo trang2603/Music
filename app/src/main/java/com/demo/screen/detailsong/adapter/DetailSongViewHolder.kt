@@ -77,9 +77,9 @@ class DetailSongViewHolder(
                         )
                     }
 
-                    DetailSongAdapter.UPDATE_SONG -> {
+                    /*DetailSongAdapter.UPDATE_SONG -> {
                         binding.
-                    }
+                    }*/
                 }
             }
         }
