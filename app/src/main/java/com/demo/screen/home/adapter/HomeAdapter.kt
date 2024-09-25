@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.demo.base.BaseAdapter
 import com.demo.data.modelui.DataUi
 import com.demo.data.modelui.Type
 import com.demo.databinding.ListFavouriteHorizontalBinding
@@ -18,20 +19,23 @@ import com.demo.screen.home.adapter.showfavourite.FavouriteViewHolder
 
 class HomeAdapter(
     val onLongClickPlaylist: (DataUi) -> Unit,
-) : ListAdapter<DataUi, RecyclerView.ViewHolder>(
+) : BaseAdapter<DataUi, RecyclerView.ViewHolder>(
         HomeItemCallback(),
     ) {
-    // lay item o vi tri position
-    override fun getItem(position: Int): DataUi = super.getItem(position)
 
     // item o vị tri position duoc bieu dien theo viewHolder nao
-    override fun getItemViewType(position: Int): Int {
+    /*override fun getItemViewType(position: Int): Int {
         val item: DataUi = getItem(position)
         val itemType = item.type.hashCode()
         return itemType
+    }*/
+
+    override fun getItemViewType(position: Int): Int {
+        val item: DataUi = getItem(position)
+        return item.type.hashCode()
     }
 
-    override fun onCreateViewHolder(
+    override fun oncreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): RecyclerView.ViewHolder {
@@ -79,8 +83,17 @@ class HomeAdapter(
             }
         }
     }
+    override fun onbindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val item = getItem(position)
+        when (holder) {
+            is PlaylistHorizontalViewHolder -> holder.bindData(item)
+            is RecentlyViewHolder -> holder.bindData(item)
+            is FavouriteViewHolder -> holder.bindData(item)
+            is PlaylistVerticalViewHolder -> holder.bindData(item)
+        }
+    }
 
-    override fun onBindViewHolder(
+    /*override fun onbindViewHolder(
         holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
@@ -94,7 +107,9 @@ class HomeAdapter(
         } else if (holder is PlaylistVerticalViewHolder) {
             holder.bindData(item)
         }
-    }
+    }*/
+
+
 }
 
 class HomeItemCallback : DiffUtil.ItemCallback<DataUi>() {

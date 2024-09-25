@@ -54,7 +54,7 @@ class HomeFragment : BaseMVVMFragment<HomeViewModel>() {
             .map { it.data }
             .distinctUntilChanged()
             .onEach {
-                adapter.submitList(it?.toList() ?: listOf())
+                adapter.updateItems(it?.toList() ?: listOf())
             }.launchIn(lifecycleScope)
     }
 

@@ -3,12 +3,12 @@ package com.demo.screen
 import android.os.Bundle
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
-import com.demo.ExampleFragment
 import com.demo.R
 import com.demo.databinding.ActivityMainBinding
 import com.demo.screen.favourite.FavouriteFragment
 import com.demo.screen.home.HomeFragment
 import com.demo.screen.music.MusicFragment
+import com.demo.screen.setting.SettingFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlin.math.sqrt
 
@@ -26,8 +26,7 @@ class MainActivity2 : AppCompatActivity() {
             HomeFragment(),
             MusicFragment(),
             FavouriteFragment(),
-            ExampleFragment(),
-//            SettingFragment(),
+            SettingFragment(),
         )
 
     override fun onCreate(savedInstanceState: Bundle?) {

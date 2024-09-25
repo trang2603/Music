@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.demo.base.BaseAdapter
 import com.demo.data.model.Songs
 import com.demo.data.modelui.DataDetailUi
 import com.demo.data.modelui.TypeDetail
@@ -28,11 +29,11 @@ class DetailSongAdapter(
         val UPDATE_SONG = "UPDATE_SONG"
     }
 
-    /*override fun getItemViewType(position: Int): Int {
+    override fun getItemViewType(position: Int): Int {
         val item: DataDetailUi = getItem(position)
         val itemType = item.type.hashCode()
         return itemType
-    }*/
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -110,7 +111,7 @@ class DetailSongAdapter(
         }
     }
 
-    /*override fun onBindViewHolder(
+    override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
         position: Int,
         payloads: MutableList<Any>,
@@ -123,7 +124,7 @@ class DetailSongAdapter(
                 holder.bindData(payloads, item)
             }
         }
-    }*/
+    }
 }
 
 class DetailSongDiffCallback : ItemCallback<DataDetailUi>() {
